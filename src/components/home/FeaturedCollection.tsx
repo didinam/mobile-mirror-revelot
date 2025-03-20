@@ -1,7 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from "@/components/ui/button";
 
 interface FeaturedCollectionProps {
   title: string;
@@ -10,11 +9,11 @@ interface FeaturedCollectionProps {
   link: string;
 }
 
-const FeaturedCollection: React.FC<FeaturedCollectionProps> = ({
-  title,
-  description,
-  image,
-  link
+const FeaturedCollection: React.FC<FeaturedCollectionProps> = ({ 
+  title, 
+  description, 
+  image, 
+  link 
 }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -37,35 +36,30 @@ const FeaturedCollection: React.FC<FeaturedCollectionProps> = ({
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-16 reveal-section">
+    <section ref={sectionRef} className="py-16 bg-gray-50 reveal-section">
       <div className="container mx-auto px-4">
-        <h2 className="text-center text-sm font-medium uppercase tracking-widest mb-3">LATEST COLLECTION</h2>
-        <h3 className="text-center text-3xl font-serif mb-6">{title}</h3>
-        
-        <div className="max-w-2xl mx-auto text-center mb-8">
-          <p className="text-base leading-relaxed">
-            {description}
-          </p>
-        </div>
-        
-        <div className="flex justify-center mb-8">
-          <Button 
-            asChild
-            variant="outline"
-            className="border-black text-black hover:bg-black hover:text-white transition-colors duration-300"
-          >
-            <Link to={link}>LEARN MORE</Link>
-          </Button>
-        </div>
-        
-        <div className="max-w-4xl mx-auto">
-          <div className="image-container">
-            <img 
-              src={image} 
-              alt={title} 
-              className="w-full h-auto object-cover rounded-lg"
-              loading="lazy"
-            />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="order-2 md:order-1">
+            <h2 className="text-sm font-medium uppercase tracking-widest mb-2">{title}</h2>
+            <p className="text-gray-600 mb-6">{description}</p>
+            <Link 
+              to={link}
+              className="inline-block border border-black text-black px-6 py-2 text-sm uppercase hover:bg-black hover:text-white transition-colors"
+            >
+              Explore Collection
+            </Link>
+          </div>
+          
+          <div className="order-1 md:order-2">
+            <div className="overflow-hidden">
+              <div className="aspect-square">
+                <img 
+                  src={image} 
+                  alt={title} 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
