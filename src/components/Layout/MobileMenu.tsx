@@ -1,9 +1,10 @@
 
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { X, ChevronRight, Facebook, Instagram, Youtube } from 'lucide-react';
+import { X, ChevronRight, Facebook, Instagram, Youtube, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Logo from '../shared/Logo';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -11,6 +12,8 @@ interface MobileMenuProps {
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
+  const { user, logout } = useAuth();
+  
   // Prevent scrolling when menu is open
   useEffect(() => {
     if (isOpen) {
@@ -99,13 +102,34 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
           <div className="mt-8 px-4">
             <ul className="space-y-4">
               <li className="py-2 border-b">
-                <Link 
-                  to="/account/login" 
-                  className="block text-lg"
-                  onClick={onClose}
-                >
-                  Register / Login
-                </Link>
+                {user ? (
+                  <div>
+                    <Link 
+                      to="/account" 
+                      className="block text-lg flex items-center"
+                      onClick={onClose}
+                    >
+                      <User className="w-5 h-5 mr-2" /> Mano paskyra
+                    </Link>
+                    <button 
+                      onClick={() => {
+                        logout();
+                        onClose();
+                      }} 
+                      className="block text-lg text-red-500 mt-2"
+                    >
+                      Atsijungti
+                    </button>
+                  </div>
+                ) : (
+                  <Link 
+                    to="/account/login" 
+                    className="block text-lg"
+                    onClick={onClose}
+                  >
+                    Prisijungti / Registruotis
+                  </Link>
+                )}
               </li>
               <li className="py-2 border-b">
                 <Link 
@@ -113,7 +137,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
                   className="block text-lg"
                   onClick={onClose}
                 >
-                  Search
+                  Paieška
                 </Link>
               </li>
             </ul>

@@ -1,14 +1,23 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, Search, ShoppingCart } from 'lucide-react';
+import { Menu, Search, ShoppingCart, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import MobileMenu from './MobileMenu';
 import Logo from '../shared/Logo';
+import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, logout } = useAuth();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -44,6 +53,32 @@ const Header: React.FC = () => {
               <Link to="/search" className="icon-button p-1 mr-2">
                 <Search className="w-6 h-6" />
               </Link>
+              
+              {user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon" className="mr-2">
+                      <User className="w-6 h-6" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem asChild>
+                      <Link to="/account">Mano paskyra</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/account/orders">Užsakymai</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => logout()}>
+                      Atsijungti
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Link to="/account/login" className="icon-button p-1 mr-2">
+                  <User className="w-6 h-6" />
+                </Link>
+              )}
+              
               <Link to="/cart" className="relative icon-button p-1">
                 <ShoppingCart className="w-6 h-6" />
                 <span className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center rounded-full bg-black text-white text-xs">

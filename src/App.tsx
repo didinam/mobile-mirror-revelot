@@ -19,6 +19,14 @@ import ImagesAdmin from "./pages/admin/ImagesAdmin";
 import ContentAdmin from "./pages/admin/ContentAdmin";
 import ProductEditor from "./pages/admin/ProductEditor";
 
+// User components
+import UserLogin from "./pages/user/UserLogin";
+import UserRegister from "./pages/user/UserRegister";
+import UserAccount from "./pages/user/UserAccount";
+import UserOrders from "./pages/user/UserOrders";
+import UserProfile from "./pages/user/UserProfile";
+import UserForgotPassword from "./pages/user/UserForgotPassword";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -33,6 +41,15 @@ const App = () => (
             <Route path="/products" element={<Products />} />
             <Route path="/collections/:collection" element={<Products />} />
             <Route path="/products/:slug" element={<ProductDetail />} />
+            
+            {/* User Routes */}
+            <Route path="/account/login" element={<UserLogin />} />
+            <Route path="/account/register" element={<UserRegister />} />
+            <Route path="/account/forgot-password" element={<UserForgotPassword />} />
+            <Route path="/account" element={<UserAccount />}>
+              <Route index element={<UserProfile />} />
+              <Route path="orders" element={<UserOrders />} />
+            </Route>
           </Route>
           
           {/* Admin Routes */}
