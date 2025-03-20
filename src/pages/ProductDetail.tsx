@@ -1,10 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, ChevronDown, Minus, Plus } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Minus, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Product } from '@/types';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -14,9 +13,9 @@ const ProductDetail = () => {
   const [activeImage, setActiveImage] = useState(0);
 
   const images = [
-    '/lovable-uploads/6d0cd294-d25f-489e-a94d-7dfc196028e4.png',
-    '/lovable-uploads/8ec8ae04-dd25-4420-a314-6ab813a63d7e.png',
-    '/lovable-uploads/7c89a365-a738-4cfe-8579-464caea8846f.png',
+    '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
+    '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
+    '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
   ];
 
   useEffect(() => {
@@ -27,13 +26,13 @@ const ProductDetail = () => {
     setTimeout(() => {
       const dummyProduct: Product = {
         id: '1',
-        title: '16\' Black Bamboo Leather Strap',
-        price: 89.00,
+        title: 'Gentus 40MM | Black Chronograph Steel (Automatic)',
+        price: 1599.00,
         currency: 'RM',
-        image: '/lovable-uploads/6d0cd294-d25f-489e-a94d-7dfc196028e4.png',
+        image: '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
         soldOut: false,
-        collection: 'straps',
-        slug: '16-black-bamboo-leather-strap'
+        collection: 'gentus',
+        slug: 'gentus-40mm-black-chronograph-steel-automatic'
       };
       
       setProduct(dummyProduct);
@@ -89,12 +88,14 @@ const ProductDetail = () => {
       
       {/* Full width product gallery */}
       <div className="relative w-full bg-gray-50">
-        <div className="aspect-w-1 aspect-h-1 md:aspect-w-16 md:aspect-h-9 max-w-6xl mx-auto">
-          <img 
-            src={images[activeImage]} 
-            alt={product.title} 
-            className="w-full h-full object-contain"
-          />
+        <div className="max-w-6xl mx-auto">
+          <div className="aspect-square">
+            <img 
+              src={images[activeImage]} 
+              alt={product.title} 
+              className="w-full h-full object-contain"
+            />
+          </div>
         </div>
         
         <button 
