@@ -29,21 +29,18 @@ const Hero: React.FC = () => {
         ref={heroRef}
         className="absolute inset-0 bg-black transition-transform duration-200"
         style={{
-          backgroundImage: "url('/lovable-uploads/64b0f5d6-a3e2-4202-9bd2-e8d02d4d9c00.png')",
+          backgroundImage: "url('/lovable-uploads/4c42375e-742b-4e3b-854e-23bdc36c203c.png')",
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
       />
       
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4 z-10">
+      <div className="absolute inset-0 flex flex-col items-center justify-end text-white px-4 z-10 pb-16">
         <div className="text-center max-w-xl mx-auto animate-fade-in">
-          <h1 className="text-4xl md:text-5xl font-serif mb-4">MECADROMO</h1>
-          <p className="mb-8 text-lg max-w-md mx-auto">
-            Precision engineering meets timeless design in our signature collection
-          </p>
+          <h1 className="text-2xl md:text-3xl font-serif mb-4 uppercase">MECADROMO</h1>
           <Button 
             asChild
-            className="bg-white text-black hover:bg-white/90 font-medium px-8 py-6 text-sm button-hover-effect"
+            className="bg-white text-black hover:bg-white/90 font-medium px-8 py-2 text-sm uppercase"
           >
             <Link to="/collections/mecadromo">LEARN MORE</Link>
           </Button>

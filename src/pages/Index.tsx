@@ -14,11 +14,17 @@ const Index = () => {
 
   return (
     <div>
-      <div className="sticky top-0 w-full text-center py-2 bg-black text-white text-sm z-40">
+      <div className="sticky top-0 w-full text-center py-2 bg-white border-b border-gray-200 text-black text-sm z-40">
         Get 10% Off When You Sign Up To Our Newsletter
       </div>
       
       <Hero />
+      
+      <div className="mt-4 mb-6 px-4">
+        <h2 className="text-center text-2xl font-serif uppercase">BEST SELLERS</h2>
+      </div>
+      
+      <BestSellers />
       
       <FeaturedCollection 
         title="TERRA"
@@ -26,8 +32,6 @@ const Index = () => {
         image="/lovable-uploads/1a311dec-5032-4861-8a49-04825816b5be.png"
         link="/collections/terra"
       />
-      
-      <BestSellers />
       
       <ShopByCollection />
       

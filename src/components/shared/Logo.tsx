@@ -24,7 +24,7 @@ const Logo: React.FC<LogoProps> = ({ className }) => {
           <path d="M12 12L16 10L20 12L16 14L12 12Z" fill="white" />
         </svg>
       </div>
-      <div className="font-serif tracking-wider text-lg font-medium">REVELOT</div>
+      <div className="font-serif tracking-wider text-lg font-medium">Watch+</div>
     </div>
   );
 };

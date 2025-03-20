@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface GalleryImage {
   id: string;
@@ -8,6 +9,7 @@ interface GalleryImage {
 }
 
 const Gallery: React.FC = () => {
+  const isMobile = useIsMobile();
   const images: GalleryImage[] = [
     {
       id: '1',
@@ -64,54 +66,58 @@ const Gallery: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-16 reveal-section">
+    <section ref={sectionRef} className="py-12 reveal-section">
       <div className="container mx-auto px-4">
-        <h2 className="text-center text-3xl font-serif mb-10">GALLERY</h2>
+        <h2 className="text-center text-2xl font-serif uppercase mb-8">GALLERY</h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {images.map((image, index) => (
-            <div 
-              key={image.id} 
-              className="overflow-hidden"
-            >
-              <div className="aspect-w-1 aspect-h-1">
-                <img 
-                  src={image.src} 
-                  alt={image.alt} 
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                  loading="lazy"
-                />
+        {!isMobile && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {images.map((image, index) => (
+              <div 
+                key={image.id} 
+                className="overflow-hidden"
+              >
+                <div className="aspect-w-1 aspect-h-1">
+                  <img 
+                    src={image.src} 
+                    alt={image.alt} 
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
         
         {/* Mobile Gallery Slider (visible only on small screens) */}
-        <div className="md:hidden mt-6 relative">
-          <div className="overflow-hidden">
-            <div className="aspect-w-1 aspect-h-1">
-              <img
-                src={images[activeIndex].src}
-                alt={images[activeIndex].alt}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            
-            {/* Navigation dots */}
-            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-              {images.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setActiveIndex(index)}
-                  className={`w-2 h-2 rounded-full ${
-                    activeIndex === index ? 'bg-white' : 'bg-white/50'
-                  }`}
-                  aria-label={`Go to image ${index + 1}`}
+        {isMobile && (
+          <div className="mt-2 relative">
+            <div className="overflow-hidden">
+              <div className="aspect-w-1 aspect-h-1">
+                <img
+                  src={images[activeIndex].src}
+                  alt={images[activeIndex].alt}
+                  className="w-full h-full object-cover"
                 />
-              ))}
+              </div>
+              
+              {/* Navigation dots */}
+              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+                {images.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveIndex(index)}
+                    className={`w-2 h-2 rounded-full ${
+                      activeIndex === index ? 'bg-black' : 'bg-gray-400'
+                    }`}
+                    aria-label={`Go to image ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );
