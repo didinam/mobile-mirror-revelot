@@ -19,10 +19,8 @@ const ProductDetail = () => {
   ];
 
   useEffect(() => {
-    // Simulate loading product data
     setLoading(true);
     
-    // In a real app, you would fetch the product by slug from an API
     setTimeout(() => {
       const dummyProduct: Product = {
         id: '1',
@@ -39,7 +37,6 @@ const ProductDetail = () => {
       setLoading(false);
     }, 500);
     
-    // Scroll to top on page load
     window.scrollTo(0, 0);
   }, [slug]);
 
