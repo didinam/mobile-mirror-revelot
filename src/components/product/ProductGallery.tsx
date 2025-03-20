@@ -20,10 +20,10 @@ const ProductGallery = ({ images, productTitle }: ProductGalleryProps) => {
   };
 
   return (
-    <div className="relative w-full bg-black">
-      <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="relative w-full bg-black py-8">
+      <div className="max-w-6xl mx-auto px-4">
         <div className="relative w-full max-w-md mx-auto">
-          <AspectRatio ratio={1/1} className="w-full">
+          <AspectRatio ratio={1/1} className="w-full bg-black">
             <img 
               src={images[activeImage]} 
               alt={productTitle} 
