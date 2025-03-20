@@ -7,7 +7,7 @@ const Hero: React.FC = () => {
   return (
     <div className="relative w-full overflow-hidden">
       <div 
-        className="w-full aspect-[3/4] bg-black"
+        className="w-full aspect-square bg-black"
         style={{
           backgroundImage: "url('/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png')",
           backgroundSize: 'cover',

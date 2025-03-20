@@ -12,7 +12,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <div className="product-card group">
       <Link to={`/products/${product.slug}`} className="block">
         <div className="relative mb-3 overflow-hidden">
-          <div className="aspect-w-1 aspect-h-1 bg-gray-100">
+          <div className="aspect-square bg-gray-100">
             <img 
               src={product.image} 
               alt={product.title} 

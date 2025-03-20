@@ -65,7 +65,7 @@ const ShopByCollection: React.FC = () => {
               className="group overflow-hidden rounded-lg hover:shadow-lg transition-shadow duration-300"
             >
               <div className="relative overflow-hidden">
-                <div className="aspect-w-1 aspect-h-1">
+                <div className="aspect-square">
                   <img 
                     src={collection.image} 
                     alt={collection.title} 

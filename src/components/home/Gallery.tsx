@@ -77,7 +77,7 @@ const Gallery: React.FC = () => {
                 key={image.id} 
                 className="overflow-hidden"
               >
-                <div className="aspect-w-1 aspect-h-1">
+                <div className="aspect-square">
                   <img 
                     src={image.src} 
                     alt={image.alt} 
@@ -94,7 +94,7 @@ const Gallery: React.FC = () => {
         {isMobile && (
           <div className="mt-2 relative">
             <div className="overflow-hidden">
-              <div className="aspect-w-1 aspect-h-1">
+              <div className="aspect-square">
                 <img
                   src={images[activeIndex].src}
                   alt={images[activeIndex].alt}
