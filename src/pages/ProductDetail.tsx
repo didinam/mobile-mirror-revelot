@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -14,9 +13,9 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
 
   const images = [
-    '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
-    '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
-    '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
+    '/lovable-uploads/f3d1fa9e-b533-448d-9396-36649a3c96e3.png',
+    '/lovable-uploads/f3d1fa9e-b533-448d-9396-36649a3c96e3.png',
+    '/lovable-uploads/f3d1fa9e-b533-448d-9396-36649a3c96e3.png',
   ];
 
   useEffect(() => {
@@ -30,7 +29,7 @@ const ProductDetail = () => {
         title: 'Gentus 40MM | Black Chronograph Steel (Automatic)',
         price: 1599.00,
         currency: 'RM',
-        image: '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
+        image: '/lovable-uploads/f3d1fa9e-b533-448d-9396-36649a3c96e3.png',
         soldOut: false,
         collection: 'gentus',
         slug: 'gentus-40mm-black-chronograph-steel-automatic'

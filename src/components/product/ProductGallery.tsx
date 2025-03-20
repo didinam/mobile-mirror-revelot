@@ -20,8 +20,8 @@ const ProductGallery = ({ images, productTitle }: ProductGalleryProps) => {
   };
 
   return (
-    <div className="relative w-full bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4">
+    <div className="relative w-full bg-black">
+      <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="relative w-full max-w-md mx-auto">
           <AspectRatio ratio={1/1} className="w-full">
             <img 
@@ -56,7 +56,7 @@ const ProductGallery = ({ images, productTitle }: ProductGalleryProps) => {
             key={index}
             onClick={() => setActiveImage(index)}
             className={`w-2 h-2 rounded-full ${
-              activeImage === index ? 'bg-black' : 'bg-gray-300'
+              activeImage === index ? 'bg-white' : 'bg-gray-500'
             }`}
             aria-label={`Go to image ${index + 1}`}
           />
