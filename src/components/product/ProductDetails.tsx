@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const ProductDetails = () => {
   return (
@@ -39,6 +40,15 @@ const ProductDetails = () => {
         <Button variant="outline" className="text-sm border-black text-black hover:bg-black hover:text-white rounded-none">
           ESTIMATE SHIPPING
         </Button>
+      </div>
+      
+      {/* Admin Link - normally you would only show this to admin users */}
+      <div className="border-t border-gray-200 pt-6">
+        <div className="text-center">
+          <Link to="/admin/login" className="text-xs text-gray-500 hover:underline">
+            Admin Panel
+          </Link>
+        </div>
       </div>
     </div>
   );
