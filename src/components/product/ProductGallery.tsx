@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 type ProductGalleryProps = {
   images: string[];
@@ -21,13 +22,13 @@ const ProductGallery = ({ images, productTitle }: ProductGalleryProps) => {
   return (
     <div className="relative w-full bg-gray-50">
       <div className="max-w-6xl mx-auto">
-        <div className="aspect-square">
+        <AspectRatio ratio={1/1} className="w-full">
           <img 
             src={images[activeImage]} 
             alt={productTitle} 
             className="w-full h-full object-contain"
           />
-        </div>
+        </AspectRatio>
       </div>
       
       <button 
