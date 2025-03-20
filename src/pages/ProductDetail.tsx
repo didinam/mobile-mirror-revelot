@@ -13,7 +13,8 @@ const ProductDetail = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const watchImage = '/lovable-uploads/f3d1fa9e-b533-448d-9396-36649a3c96e3.png';
+  // Use the new image uploaded by user
+  const watchImage = '/lovable-uploads/7a0f7dfc-1749-4460-9161-25bb1925d0e2.png';
   
   const images = [
     watchImage,

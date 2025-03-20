@@ -24,11 +24,17 @@ const ProductGallery = ({ images, productTitle }: ProductGalleryProps) => {
       <div className="max-w-6xl mx-auto px-4">
         <div className="relative w-full max-w-md mx-auto">
           <AspectRatio ratio={1/1} className="w-full bg-black">
-            <img 
-              src={images[activeImage]} 
-              alt={productTitle} 
-              className="w-full h-full object-contain mx-auto"
-            />
+            {images.length > 0 ? (
+              <img 
+                src={images[activeImage]} 
+                alt={productTitle} 
+                className="w-full h-full object-contain mx-auto"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-white">
+                No image available
+              </div>
+            )}
           </AspectRatio>
         </div>
       </div>
