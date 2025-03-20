@@ -135,7 +135,6 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
           
           <div className="mt-4 flex justify-center">
             <select className="currency-selector border border-gray-300 rounded px-4 py-2 bg-white">
-              <option value="MYR">MYR (RM)</option>
               <option value="USD">USD ($)</option>
               <option value="EUR">EUR (€)</option>
               <option value="GBP">GBP (£)</option>

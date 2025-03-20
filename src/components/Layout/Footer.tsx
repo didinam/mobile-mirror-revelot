@@ -86,12 +86,15 @@ const Footer: React.FC = () => {
         </div>
         
         <div className="flex justify-center mb-6">
-          <div className="grid grid-cols-6 gap-2">
-            {['amex', 'apple', 'diners', 'discover', 'google', 'jcb', 'mastercard', 'visa'].map((payment) => (
-              <div key={payment} className="w-10 h-6 bg-white rounded flex items-center justify-center">
-                <span className="text-xs text-black font-medium">{payment}</span>
-              </div>
-            ))}
+          <div className="flex flex-wrap justify-center gap-2">
+            <img src="/payment-icons/visa.svg" alt="Visa" className="h-8 bg-white rounded p-1" />
+            <img src="/payment-icons/mastercard.svg" alt="Mastercard" className="h-8 bg-white rounded p-1" />
+            <img src="/payment-icons/amex.svg" alt="American Express" className="h-8 bg-white rounded p-1" />
+            <img src="/payment-icons/discover.svg" alt="Discover" className="h-8 bg-white rounded p-1" />
+            <img src="/payment-icons/jcb.svg" alt="JCB" className="h-8 bg-white rounded p-1" />
+            <img src="/payment-icons/diners.svg" alt="Diners Club" className="h-8 bg-white rounded p-1" />
+            <img src="/payment-icons/apple-pay.svg" alt="Apple Pay" className="h-8 bg-white rounded p-1" />
+            <img src="/payment-icons/google-pay.svg" alt="Google Pay" className="h-8 bg-white rounded p-1" />
           </div>
         </div>
         
@@ -99,7 +102,6 @@ const Footer: React.FC = () => {
           <p>© All Rights Reserved 2025</p>
           <div className="mt-2 flex justify-center">
             <select className="bg-transparent text-gray-400 border-gray-800 text-xs">
-              <option value="MYR">MYR (RM)</option>
               <option value="USD">USD ($)</option>
               <option value="EUR">EUR (€)</option>
               <option value="GBP">GBP (£)</option>

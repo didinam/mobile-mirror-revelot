@@ -19,11 +19,14 @@ const ProductDetails = () => {
         </p>
         
         <div className="flex flex-wrap gap-2">
-          {['visa', 'mastercard', 'amex', 'discover', 'jcb', 'diners', 'apple', 'google'].map((payment) => (
-            <div key={payment} className="w-10 h-6 bg-white border border-gray-200 rounded flex items-center justify-center">
-              <span className="text-xs text-gray-500">{payment.charAt(0).toUpperCase()}</span>
-            </div>
-          ))}
+          <img src="/payment-icons/visa.svg" alt="Visa" className="h-8 bg-white rounded border border-gray-200 p-1" />
+          <img src="/payment-icons/mastercard.svg" alt="Mastercard" className="h-8 bg-white rounded border border-gray-200 p-1" />
+          <img src="/payment-icons/amex.svg" alt="American Express" className="h-8 bg-white rounded border border-gray-200 p-1" />
+          <img src="/payment-icons/discover.svg" alt="Discover" className="h-8 bg-white rounded border border-gray-200 p-1" />
+          <img src="/payment-icons/jcb.svg" alt="JCB" className="h-8 bg-white rounded border border-gray-200 p-1" />
+          <img src="/payment-icons/diners.svg" alt="Diners Club" className="h-8 bg-white rounded border border-gray-200 p-1" />
+          <img src="/payment-icons/apple-pay.svg" alt="Apple Pay" className="h-8 bg-white rounded border border-gray-200 p-1" />
+          <img src="/payment-icons/google-pay.svg" alt="Google Pay" className="h-8 bg-white rounded border border-gray-200 p-1" />
         </div>
       </div>
       
