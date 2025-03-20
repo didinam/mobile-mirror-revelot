@@ -9,7 +9,7 @@ const Hero: React.FC = () => {
       <div 
         className="w-full aspect-[3/4] bg-black"
         style={{
-          backgroundImage: "url('/lovable-uploads/75604806-b45c-4d19-b77a-5f065778a8e8.png')",
+          backgroundImage: "url('/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png')",
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}

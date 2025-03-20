@@ -13,18 +13,18 @@ const Gallery: React.FC = () => {
   const images: GalleryImage[] = [
     {
       id: '1',
-      src: '/lovable-uploads/3f565649-2493-4c68-af91-7d92ecd3a495.png',
-      alt: 'Watch on wrist'
+      src: '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
+      alt: 'Chronograph watch with mesh bracelet'
     },
     {
       id: '2',
-      src: '/lovable-uploads/b70f4fff-659f-4d4d-a51d-44dcf2237a26.png',
-      alt: 'Watch detail'
+      src: '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
+      alt: 'Silver chronograph on black background'
     },
     {
       id: '3',
-      src: '/lovable-uploads/a853447a-248d-4240-be15-a9630c510e10.png',
-      alt: 'Watch on desk'
+      src: '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
+      alt: 'Close-up of silver mesh bracelet watch'
     }
   ];
   

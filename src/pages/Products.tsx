@@ -8,43 +8,43 @@ const Products = () => {
   const [products, setProducts] = useState<Product[]>([
     {
       id: '1',
-      title: '16\' Black Bamboo Leather Strap',
+      title: '16\' Black Mesh Bracelet',
       price: 89.00,
       currency: 'RM',
-      image: '/lovable-uploads/6d0cd294-d25f-489e-a94d-7dfc196028e4.png',
+      image: '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
       soldOut: false,
       collection: 'straps',
-      slug: '16-black-bamboo-leather-strap'
+      slug: '16-black-mesh-bracelet'
     },
     {
       id: '2',
-      title: '16\' Blue Saffiano Leather Strap',
+      title: '16\' Silver Mesh Bracelet',
       price: 89.00,
       currency: 'RM',
-      image: '/lovable-uploads/6d0cd294-d25f-489e-a94d-7dfc196028e4.png',
+      image: '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
       soldOut: false,
       collection: 'straps',
-      slug: '16-blue-saffiano-leather-strap'
+      slug: '16-silver-mesh-bracelet'
     },
     {
       id: '3',
-      title: '16\' Pink Crocodile Leather Strap',
+      title: '16\' Gunmetal Mesh Bracelet',
       price: 89.00,
       currency: 'RM',
-      image: '/lovable-uploads/6d0cd294-d25f-489e-a94d-7dfc196028e4.png',
+      image: '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
       soldOut: true,
       collection: 'straps',
-      slug: '16-pink-crocodile-leather-strap'
+      slug: '16-gunmetal-mesh-bracelet'
     },
     {
       id: '4',
-      title: '16\' Beige Suede Leather Strap',
+      title: '16\' Rose Gold Mesh Bracelet',
       price: 89.00,
       currency: 'RM',
-      image: '/lovable-uploads/6d0cd294-d25f-489e-a94d-7dfc196028e4.png',
+      image: '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
       soldOut: true,
       collection: 'straps',
-      slug: '16-beige-suede-leather-strap'
+      slug: '16-rose-gold-mesh-bracelet'
     }
   ]);
 

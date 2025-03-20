@@ -8,33 +8,33 @@ const BestSellers: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([
     {
       id: '1',
-      title: 'Gentus 40MM | Smoke Skeleton Steel (Automatic)',
+      title: 'Gentus 40MM | Black Chronograph Steel (Automatic)',
       price: 1599.00,
       currency: 'RM',
-      image: '/lovable-uploads/8ec8ae04-dd25-4420-a314-6ab813a63d7e.png',
+      image: '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
       soldOut: true,
       collection: 'gentus',
-      slug: 'gentus-40mm-smoke-skeleton-steel-automatic'
+      slug: 'gentus-40mm-black-chronograph-steel-automatic'
     },
     {
       id: '2',
-      title: 'Terra 39MM | Black Field (Automatic)',
+      title: 'Terra 39MM | Silver Chronograph Mesh (Automatic)',
       price: 1499.00,
       currency: 'RM',
-      image: '/lovable-uploads/7c89a365-a738-4cfe-8579-464caea8846f.png',
+      image: '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
       soldOut: false,
       collection: 'terra',
-      slug: 'terra-39mm-black-field-automatic'
+      slug: 'terra-39mm-silver-chronograph-mesh-automatic'
     },
     {
       id: '3',
-      title: 'Terra 39MM | Olive Green Field (Automatic)',
+      title: 'Gentus 42MM | Silver Steel Chronograph (Automatic)',
       price: 1499.00,
       currency: 'RM',
-      image: '/lovable-uploads/e3781fe8-b5b7-4394-9bb4-9131904b8d2f.png',
+      image: '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
       soldOut: false,
-      collection: 'terra',
-      slug: 'terra-39mm-olive-green-field-automatic'
+      collection: 'gentus',
+      slug: 'gentus-42mm-silver-steel-chronograph-automatic'
     }
   ]);
 

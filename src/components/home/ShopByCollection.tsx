@@ -14,19 +14,19 @@ const ShopByCollection: React.FC = () => {
     {
       id: '1',
       title: 'TERRA',
-      image: '/lovable-uploads/c0833862-dfc4-41ef-8f03-ddbf55842076.png',
+      image: '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
       link: '/collections/terra'
     },
     {
       id: '2',
       title: 'GENTUS',
-      image: '/lovable-uploads/de5d4c4b-15c7-4e1c-8790-685ed8b40c67.png',
+      image: '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
       link: '/collections/gentus'
     },
     {
       id: '3',
       title: 'STRAPS',
-      image: '/lovable-uploads/830f7706-f3e0-49ed-b3cd-f64092bb0cf4.png',
+      image: '/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png',
       link: '/collections/straps'
     }
   ];

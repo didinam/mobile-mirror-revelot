@@ -28,8 +28,8 @@ const Index = () => {
       
       <FeaturedCollection 
         title="TERRA"
-        description="A design that pays tribute to the iconic Dirty Dozen collection of field watches created by twelve different Swiss watchmakers during the final years of World War II. Issued to British servicemen, these watches represent a unique intersection of horology and military history, holding a significant place in both watchmaking and wartime memorabilia."
-        image="/lovable-uploads/1a311dec-5032-4861-8a49-04825816b5be.png"
+        description="A premium chronograph collection featuring stainless steel cases, precision movements, and elegant mesh bracelets. These sophisticated timepieces combine classic styling with modern functionality, perfect for both formal occasions and everyday wear."
+        image="/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png"
         link="/collections/terra"
       />
       
