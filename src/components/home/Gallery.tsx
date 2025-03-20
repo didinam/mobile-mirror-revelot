@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface GalleryImage {
   id: string;
@@ -26,6 +26,7 @@ const Gallery: React.FC = () => {
     }
   ];
   
+  const [activeIndex, setActiveIndex] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
@@ -46,16 +47,32 @@ const Gallery: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
+  const nextImage = () => {
+    setActiveIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
+  const prevImage = () => {
+    setActiveIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextImage();
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section ref={sectionRef} className="py-16 reveal-section">
       <div className="container mx-auto px-4">
         <h2 className="text-center text-3xl font-serif mb-10">GALLERY</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {images.map((image) => (
+          {images.map((image, index) => (
             <div 
               key={image.id} 
-              className="overflow-hidden rounded-lg"
+              className="overflow-hidden"
             >
               <div className="aspect-w-1 aspect-h-1">
                 <img 
@@ -67,6 +84,33 @@ const Gallery: React.FC = () => {
               </div>
             </div>
           ))}
+        </div>
+        
+        {/* Mobile Gallery Slider (visible only on small screens) */}
+        <div className="md:hidden mt-6 relative">
+          <div className="overflow-hidden">
+            <div className="aspect-w-1 aspect-h-1">
+              <img
+                src={images[activeIndex].src}
+                alt={images[activeIndex].alt}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            {/* Navigation dots */}
+            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+              {images.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setActiveIndex(index)}
+                  className={`w-2 h-2 rounded-full ${
+                    activeIndex === index ? 'bg-white' : 'bg-white/50'
+                  }`}
+                  aria-label={`Go to image ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
