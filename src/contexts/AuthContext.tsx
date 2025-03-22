@@ -1,9 +1,12 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User } from '../types/user';
+import { User, Session } from '@supabase/supabase-js';
+import { supabase } from '../integrations/supabase/client';
+import { User as AppUser } from '../types/user';
 
 interface AuthContextType {
-  user: User | null;
+  user: AppUser | null;
+  session: Session | null;
   isLoading: boolean;
   error: string | null;
   login: (email: string, password: string) => Promise<boolean>;
@@ -19,17 +22,89 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AppUser | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check if user is logged in from localStorage
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setIsLoading(false);
+    // Set up auth state listener FIRST
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, currentSession) => {
+        setSession(currentSession);
+        
+        if (currentSession?.user) {
+          // Get user profile data if logged in
+          try {
+            const { data: profile } = await supabase
+              .from('profiles')
+              .select('*')
+              .eq('id', currentSession.user.id)
+              .single();
+              
+            if (profile) {
+              setUser({
+                id: currentSession.user.id,
+                email: currentSession.user.email || '',
+                firstName: profile.first_name || '',
+                lastName: profile.last_name || '',
+                createdAt: currentSession.user.created_at || new Date().toISOString(),
+              });
+            } else {
+              // If no profile found, create basic user object
+              setUser({
+                id: currentSession.user.id,
+                email: currentSession.user.email || '',
+                firstName: '',
+                lastName: '',
+                createdAt: currentSession.user.created_at || new Date().toISOString(),
+              });
+            }
+          } catch (err) {
+            console.error("Error fetching user profile:", err);
+            setUser(null);
+          }
+        } else {
+          setUser(null);
+        }
+      }
+    );
+
+    // THEN check for existing session
+    supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
+      setSession(currentSession);
+      
+      if (currentSession?.user) {
+        // Get user profile data if logged in
+        supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', currentSession.user.id)
+          .single()
+          .then(({ data: profile, error: profileError }) => {
+            if (profileError) {
+              console.error("Error fetching user profile:", profileError);
+              setUser(null);
+            } else if (profile) {
+              setUser({
+                id: currentSession.user.id,
+                email: currentSession.user.email || '',
+                firstName: profile.first_name || '',
+                lastName: profile.last_name || '',
+                createdAt: currentSession.user.created_at || new Date().toISOString(),
+              });
+            }
+            setIsLoading(false);
+          });
+      } else {
+        setUser(null);
+        setIsLoading(false);
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
@@ -37,26 +112,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setError(null);
     
     try {
-      // This is a mock implementation
-      // In a real app, you would make an API call to validate credentials
-      if (email === 'user@example.com' && password === 'password') {
-        const mockUser: User = {
-          id: '1',
-          email,
-          firstName: 'John',
-          lastName: 'Doe',
-          createdAt: new Date().toISOString(),
-        };
-        
-        setUser(mockUser);
-        localStorage.setItem('user', JSON.stringify(mockUser));
-        setIsLoading(false);
-        return true;
-      } else {
-        throw new Error('Invalid email or password');
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+      
+      if (error) {
+        throw error;
       }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      
+      return true;
+    } catch (err: any) {
+      setError(err.message || 'An error occurred during login');
       setIsLoading(false);
       return false;
     }
@@ -72,30 +139,47 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setError(null);
     
     try {
-      // This is a mock implementation
-      // In a real app, you would make an API call to register the user
-      const mockUser: User = {
-        id: (Math.floor(Math.random() * 1000) + 1).toString(),
+      // Register the user
+      const { data, error } = await supabase.auth.signUp({
         email,
-        firstName,
-        lastName,
-        createdAt: new Date().toISOString(),
-      };
+        password,
+        options: {
+          data: {
+            first_name: firstName,
+            last_name: lastName
+          }
+        }
+      });
       
-      setUser(mockUser);
-      localStorage.setItem('user', JSON.stringify(mockUser));
-      setIsLoading(false);
+      if (error) {
+        throw error;
+      }
+      
+      // Update the profile with first and last name
+      if (data.user) {
+        const { error: updateError } = await supabase
+          .from('profiles')
+          .update({
+            first_name: firstName,
+            last_name: lastName
+          })
+          .eq('id', data.user.id);
+          
+        if (updateError) {
+          console.error("Error updating profile:", updateError);
+        }
+      }
+      
       return true;
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+    } catch (err: any) {
+      setError(err.message || 'An error occurred during registration');
       setIsLoading(false);
       return false;
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
+  const logout = async () => {
+    await supabase.auth.signOut();
   };
 
   const resetPassword = async (email: string): Promise<boolean> => {
@@ -103,12 +187,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setError(null);
     
     try {
-      // This is a mock implementation
-      // In a real app, you would make an API call to reset the password
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/account/reset-password`,
+      });
+      
+      if (error) {
+        throw error;
+      }
+      
       setIsLoading(false);
       return true;
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+    } catch (err: any) {
+      setError(err.message || 'An error occurred');
       setIsLoading(false);
       return false;
     }
@@ -118,6 +208,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
+        session,
         isLoading,
         error,
         login,
