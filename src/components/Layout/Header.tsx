@@ -37,7 +37,7 @@ const Header: React.FC = () => {
     <>
       <header 
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full mt-10",
+          "fixed top-10 left-0 right-0 z-40 transition-all duration-300 w-full",
           isScrolled ? "bg-white/90 header-blur shadow-sm py-3" : "bg-white py-4"
         )}
       >

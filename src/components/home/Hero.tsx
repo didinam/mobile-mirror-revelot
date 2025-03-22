@@ -25,22 +25,13 @@ const Hero: React.FC = () => {
           <p className="text-white/90 mb-8 max-w-md mx-auto">
             Timeless elegance designed for the modern lifestyle. Discover our exceptional collection of premium timepieces.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <Button 
               asChild
               className="bg-white text-black hover:bg-white/90 font-medium px-8 py-6 text-sm uppercase"
             >
               <Link to="/collections/mecadromo" className="flex items-center gap-2">
-                EXPLORE COLLECTION <ArrowRight className="w-4 h-4" />
-              </Link>
-            </Button>
-            <Button 
-              asChild
-              variant="outline"
-              className="border-white text-white hover:bg-white/20 font-medium px-8 py-6 text-sm uppercase"
-            >
-              <Link to="/products/featured">
-                SHOP BESTSELLERS
+                SHOP NOW <ArrowRight className="w-4 h-4" />
               </Link>
             </Button>
           </div>
