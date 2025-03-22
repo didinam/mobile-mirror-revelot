@@ -18,7 +18,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <div className="flex flex-col min-h-screen">
           <ShippingBanner />
           <Header />
-          <main className="flex-grow pt-16">
+          <main className="flex-grow pt-28">
             {children || <Outlet />}
           </main>
           <Footer />
