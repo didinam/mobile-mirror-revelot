@@ -44,8 +44,8 @@ const ProductFeature: React.FC<ProductFeatureProps> = ({
   return (
     <section ref={sectionRef} className={`${isMobile ? 'py-8' : 'py-16'} bg-gray-50 reveal-section`}>
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="order-2 md:order-1 space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="order-2 md:order-1 space-y-4 md:space-y-6">
             <h2 className="text-2xl md:text-3xl font-serif font-medium">{title}</h2>
             <p className="text-gray-600 leading-relaxed">{description}</p>
             <div className="pt-4">
