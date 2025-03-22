@@ -9,6 +9,9 @@ import Index from "./pages/Index";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import NotFound from "./pages/NotFound";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import CheckoutConfirmation from "./pages/CheckoutConfirmation";
 
 // Admin components
 import AdminLogin from "./components/admin/AdminLogin";
@@ -41,6 +44,9 @@ const App = () => (
             <Route path="/products" element={<Products />} />
             <Route path="/collections/:collection" element={<Products />} />
             <Route path="/products/:slug" element={<ProductDetail />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/checkout/confirmation" element={<CheckoutConfirmation />} />
             
             {/* User Routes */}
             <Route path="/account/login" element={<UserLogin />} />

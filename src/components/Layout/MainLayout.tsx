@@ -4,6 +4,7 @@ import Header from './Header';
 import Footer from './Footer';
 import { Outlet } from 'react-router-dom';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { CartProvider } from '@/contexts/CartContext';
 
 interface MainLayoutProps {
   children?: React.ReactNode;
@@ -12,13 +13,15 @@ interface MainLayoutProps {
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
     <AuthProvider>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-grow pt-16">
-          {children || <Outlet />}
-        </main>
-        <Footer />
-      </div>
+      <CartProvider>
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <main className="flex-grow pt-16">
+            {children || <Outlet />}
+          </main>
+          <Footer />
+        </div>
+      </CartProvider>
     </AuthProvider>
   );
 };

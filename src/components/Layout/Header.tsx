@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import MobileMenu from './MobileMenu';
 import Logo from '../shared/Logo';
 import { useAuth } from '@/contexts/AuthContext';
+import { useCart } from '@/contexts/CartContext';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -18,6 +19,7 @@ const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logout } = useAuth();
+  const { totalItems } = useCart();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -81,9 +83,11 @@ const Header: React.FC = () => {
               
               <Link to="/cart" className="relative icon-button p-1">
                 <ShoppingCart className="w-6 h-6" />
-                <span className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center rounded-full bg-black text-white text-xs">
-                  0
-                </span>
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center rounded-full bg-black text-white text-xs">
+                    {totalItems}
+                  </span>
+                )}
               </Link>
             </div>
           </div>

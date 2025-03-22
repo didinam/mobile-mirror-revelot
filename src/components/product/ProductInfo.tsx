@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Product } from '@/types';
 import QuantitySelector from './QuantitySelector';
+import { useCart } from '@/contexts/CartContext';
 
 type ProductInfoProps = {
   product: Product;
@@ -13,6 +14,17 @@ type ProductInfoProps = {
 };
 
 const ProductInfo = ({ product, quantity, onIncrementQuantity, onDecrementQuantity }: ProductInfoProps) => {
+  const { addToCart } = useCart();
+  
+  const handleAddToCart = () => {
+    addToCart(product, quantity);
+  };
+  
+  const handleBuyNow = () => {
+    addToCart(product, quantity);
+    window.location.href = '/checkout';
+  };
+  
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-xl mx-auto">
@@ -22,7 +34,7 @@ const ProductInfo = ({ product, quantity, onIncrementQuantity, onDecrementQuanti
         
         <div className="border-t border-gray-200 pt-6 mb-6">
           <div className="text-sm mb-1">SKU: S16-4B4BL3</div>
-          <div className="text-sm mb-6">We have 5 in stock</div>
+          <div className="text-sm mb-6">We have {product.stock || 5} in stock</div>
           
           <div className="mb-6">
             <div className="mb-2 font-medium">Color</div>
@@ -40,11 +52,18 @@ const ProductInfo = ({ product, quantity, onIncrementQuantity, onDecrementQuanti
           />
         </div>
         
-        <Button className="w-full bg-black hover:bg-black/90 text-white py-6 rounded-none">
+        <Button 
+          className="w-full bg-black hover:bg-black/90 text-white py-6 rounded-none"
+          onClick={handleAddToCart}
+        >
           ADD TO CART
         </Button>
         
-        <Button variant="outline" className="w-full mt-4 border-black text-black hover:bg-black hover:text-white py-6 rounded-none">
+        <Button 
+          variant="outline" 
+          className="w-full mt-4 border-black text-black hover:bg-black hover:text-white py-6 rounded-none"
+          onClick={handleBuyNow}
+        >
           BUY IT NOW
         </Button>
         

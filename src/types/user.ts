@@ -13,6 +13,10 @@ export interface Order {
   status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
   total: number;
   items: OrderItem[];
+  shippingAddress?: Address;
+  billingAddress?: Address;
+  paymentMethod?: string;
+  trackingNumber?: string;
 }
 
 export interface OrderItem {
@@ -22,4 +26,17 @@ export interface OrderItem {
   price: number;
   quantity: number;
   image: string;
+  variantInfo?: string;
+}
+
+export interface Address {
+  firstName: string;
+  lastName: string;
+  address1: string;
+  address2?: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  country: string;
+  phone?: string;
 }
