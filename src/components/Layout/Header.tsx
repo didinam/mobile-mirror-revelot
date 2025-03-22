@@ -8,6 +8,7 @@ import Logo from '../shared/Logo';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCart } from '@/contexts/CartContext';
 import { useWishlist } from '@/contexts/WishlistContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -15,6 +16,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import LanguageSelector from '../shared/LanguageSelector';
+import CurrencySelector from '../shared/CurrencySelector';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -22,6 +25,7 @@ const Header: React.FC = () => {
   const { user, logout } = useAuth();
   const { totalItems } = useCart();
   const { totalItems: wishlistItems } = useWishlist();
+  const { t } = useLanguage();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -54,6 +58,11 @@ const Header: React.FC = () => {
             </Link>
             
             <div className="flex items-center">
+              <div className="hidden md:flex mr-2">
+                <LanguageSelector />
+                <CurrencySelector />
+              </div>
+              
               <Link to="/search" className="icon-button p-1 mr-2">
                 <Search className="w-6 h-6" />
               </Link>
@@ -76,16 +85,16 @@ const Header: React.FC = () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem asChild>
-                      <Link to="/account">My Account</Link>
+                      <Link to="/account">{t('account')}</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/account/orders">Orders</Link>
+                      <Link to="/account/orders">{t('orders')}</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/wishlist">Wishlist</Link>
+                      <Link to="/wishlist">{t('wishlist')}</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => logout()}>
-                      Sign Out
+                      {t('signOut')}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

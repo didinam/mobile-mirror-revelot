@@ -6,6 +6,8 @@ import { Toaster } from '@/components/ui/sonner';
 import { AuthProvider } from './contexts/AuthContext';
 import { CartProvider } from './contexts/CartContext';
 import { WishlistProvider } from './contexts/WishlistContext';
+import { LanguageProvider } from './contexts/LanguageContext';
+import { CurrencyProvider } from './contexts/CurrencyContext';
 
 // Layout
 import MainLayout from './components/Layout/MainLayout';
@@ -46,55 +48,59 @@ import ProductEditor from './pages/admin/ProductEditor';
 
 function App() {
   return (
-    <AuthProvider>
-      <CartProvider>
-        <WishlistProvider>
-          <Router>
-            <Routes>
-              {/* Main Routes */}
-              <Route path="/" element={<MainLayout />}>
-                <Route index element={<Index />} />
-                <Route path="products" element={<Products />} />
-                <Route path="products/:slug" element={<ProductDetail />} />
-                <Route path="cart" element={<Cart />} />
-                <Route path="wishlist" element={<Wishlist />} />
-                <Route path="checkout" element={<Checkout />} />
-                <Route path="checkout/confirmation" element={<CheckoutConfirmation />} />
-                <Route path="tracking" element={<OrderTracking />} />
-                
-                {/* User Account Routes */}
-                <Route path="account/login" element={<UserLogin />} />
-                <Route path="account/register" element={<UserRegister />} />
-                <Route path="account/forgot-password" element={<UserForgotPassword />} />
-                <Route path="account" element={<UserAccount />} />
-                <Route path="account/orders" element={<UserOrders />} />
-                <Route path="account/orders/:id" element={<OrderDetail />} />
-                <Route path="account/profile" element={<UserProfile />} />
-                
-                {/* 404 Page */}
-                <Route path="*" element={<NotFound />} />
-              </Route>
-              
-              {/* Admin Routes */}
-              <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/admin" element={<AdminLayout />}>
-                <Route index element={<AdminDashboard />} />
-                <Route path="products" element={<ProductsAdmin />} />
-                <Route path="products/:id" element={<ProductEditor />} />
-                <Route path="orders" element={<OrdersAdmin />} />
-                <Route path="orders/:id" element={<OrderAdminDetail />} />
-                <Route path="customers" element={<CustomersAdmin />} />
-                <Route path="analytics" element={<AnalyticsAdmin />} />
-                <Route path="content" element={<ContentAdmin />} />
-                <Route path="images" element={<ImagesAdmin />} />
-                <Route path="settings" element={<SettingsAdmin />} />
-              </Route>
-            </Routes>
-          </Router>
-          <Toaster />
-        </WishlistProvider>
-      </CartProvider>
-    </AuthProvider>
+    <LanguageProvider>
+      <CurrencyProvider>
+        <AuthProvider>
+          <CartProvider>
+            <WishlistProvider>
+              <Router>
+                <Routes>
+                  {/* Main Routes */}
+                  <Route path="/" element={<MainLayout />}>
+                    <Route index element={<Index />} />
+                    <Route path="products" element={<Products />} />
+                    <Route path="products/:slug" element={<ProductDetail />} />
+                    <Route path="cart" element={<Cart />} />
+                    <Route path="wishlist" element={<Wishlist />} />
+                    <Route path="checkout" element={<Checkout />} />
+                    <Route path="checkout/confirmation" element={<CheckoutConfirmation />} />
+                    <Route path="tracking" element={<OrderTracking />} />
+                    
+                    {/* User Account Routes */}
+                    <Route path="account/login" element={<UserLogin />} />
+                    <Route path="account/register" element={<UserRegister />} />
+                    <Route path="account/forgot-password" element={<UserForgotPassword />} />
+                    <Route path="account" element={<UserAccount />} />
+                    <Route path="account/orders" element={<UserOrders />} />
+                    <Route path="account/orders/:id" element={<OrderDetail />} />
+                    <Route path="account/profile" element={<UserProfile />} />
+                    
+                    {/* 404 Page */}
+                    <Route path="*" element={<NotFound />} />
+                  </Route>
+                  
+                  {/* Admin Routes */}
+                  <Route path="/admin/login" element={<AdminLogin />} />
+                  <Route path="/admin" element={<AdminLayout />}>
+                    <Route index element={<AdminDashboard />} />
+                    <Route path="products" element={<ProductsAdmin />} />
+                    <Route path="products/:id" element={<ProductEditor />} />
+                    <Route path="orders" element={<OrdersAdmin />} />
+                    <Route path="orders/:id" element={<OrderAdminDetail />} />
+                    <Route path="customers" element={<CustomersAdmin />} />
+                    <Route path="analytics" element={<AnalyticsAdmin />} />
+                    <Route path="content" element={<ContentAdmin />} />
+                    <Route path="images" element={<ImagesAdmin />} />
+                    <Route path="settings" element={<SettingsAdmin />} />
+                  </Route>
+                </Routes>
+              </Router>
+              <Toaster />
+            </WishlistProvider>
+          </CartProvider>
+        </AuthProvider>
+      </CurrencyProvider>
+    </LanguageProvider>
   );
 }
 

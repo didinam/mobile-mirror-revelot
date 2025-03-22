@@ -102,3 +102,41 @@ export interface Newsletter {
   unsubscribedAt?: string;
   source?: string;
 }
+
+// New interfaces for advanced features
+export interface Language {
+  code: string;
+  name: string;
+  flag: string;
+  isDefault?: boolean;
+  isRTL?: boolean;
+}
+
+export interface CurrencyOption {
+  code: string;
+  symbol: string;
+  name: string;
+  rate: number; // Exchange rate relative to base currency
+  isDefault?: boolean;
+}
+
+export interface SecurityLog {
+  id: string;
+  userId: string;
+  event: 'login' | 'logout' | 'password_change' | 'failed_login';
+  ip: string;
+  userAgent: string;
+  timestamp: string;
+  details?: string;
+}
+
+export interface ApiKey {
+  id: string;
+  name: string;
+  key: string;
+  permissions: string[];
+  createdAt: string;
+  lastUsed?: string;
+  expiresAt?: string;
+  status: 'active' | 'expired' | 'revoked';
+}

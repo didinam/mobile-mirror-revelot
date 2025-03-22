@@ -6,6 +6,8 @@ import { Product, ProductVariant, ProductAttribute } from '@/types';
 import QuantitySelector from './QuantitySelector';
 import { useCart } from '@/contexts/CartContext';
 import { useWishlist } from '@/contexts/WishlistContext';
+import { useCurrency } from '@/contexts/CurrencyContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Heart } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
@@ -19,6 +21,8 @@ type ProductInfoProps = {
 const ProductInfo = ({ product, quantity, onIncrementQuantity, onDecrementQuantity }: ProductInfoProps) => {
   const { addToCart } = useCart();
   const { addToWishlist, isInWishlist, removeFromWishlist } = useWishlist();
+  const { formatPrice } = useCurrency();
+  const { t } = useLanguage();
   
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
     product.variants && product.variants.length > 0 ? product.variants[0] : null
@@ -137,7 +141,9 @@ const ProductInfo = ({ product, quantity, onIncrementQuantity, onDecrementQuanti
       <div className="max-w-xl mx-auto">
         <div className="text-sm text-gray-500 mb-2">REVELOT</div>
         <h1 className="text-2xl md:text-3xl font-serif mb-3">{product.title}</h1>
-        <div className="text-xl font-medium mb-6">{product.currency} {getCurrentPrice().toFixed(2)}</div>
+        <div className="text-xl font-medium mb-6">
+          {formatPrice(getCurrentPrice(), product.currency)}
+        </div>
         
         <div className="border-t border-gray-200 pt-6 mb-6">
           <div className="flex justify-between items-center mb-4">
@@ -147,16 +153,16 @@ const ProductInfo = ({ product, quantity, onIncrementQuantity, onDecrementQuanti
             {stockStatus.inStock ? (
               stockStatus.lowStock ? (
                 <Badge variant="outline" className="text-amber-600 border-amber-600">
-                  Only {stockStatus.stock} left
+                  {t('onlyLeft', { count: stockStatus.stock })}
                 </Badge>
               ) : (
                 <Badge variant="outline" className="text-green-600 border-green-600">
-                  In Stock
+                  {t('inStock')}
                 </Badge>
               )
             ) : (
               <Badge variant="outline" className="text-red-600 border-red-600">
-                Out of Stock
+                {t('outOfStock')}
               </Badge>
             )}
           </div>
@@ -196,7 +202,7 @@ const ProductInfo = ({ product, quantity, onIncrementQuantity, onDecrementQuanti
             onClick={handleAddToCart}
             disabled={!stockStatus.inStock}
           >
-            {stockStatus.inStock ? 'ADD TO CART' : 'OUT OF STOCK'}
+            {stockStatus.inStock ? t('addToCart') : t('outOfStock')}
           </Button>
           
           <Button
@@ -220,13 +226,13 @@ const ProductInfo = ({ product, quantity, onIncrementQuantity, onDecrementQuanti
           onClick={handleBuyNow}
           disabled={!stockStatus.inStock}
         >
-          BUY IT NOW
+          {t('buyNow')}
         </Button>
         
         <div className="mt-4 text-sm text-center">
           <Link to="/shipping" className="text-gray-500 hover:underline">
-            Shipping
-          </Link> calculated at checkout.
+            {t('shipping')}
+          </Link> {t('calculatedAtCheckout')}
         </div>
       </div>
     </div>
