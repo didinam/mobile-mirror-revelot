@@ -1,15 +1,17 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { Product, ProductVariant, ProductAttribute } from '@/types';
-import QuantitySelector from './QuantitySelector';
 import { useCart } from '@/contexts/CartContext';
 import { useWishlist } from '@/contexts/WishlistContext';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Heart } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+
+import QuantitySelector from './QuantitySelector';
+import ProductHeader from './ProductHeader';
+import ProductPriceDisplay from './ProductPriceDisplay';
+import ProductStockStatus from './ProductStockStatus';
+import ProductVariantSelector from './ProductVariantSelector';
+import ProductActionsBar from './ProductActionsBar';
 
 type ProductInfoProps = {
   product: Product;
@@ -139,54 +141,31 @@ const ProductInfo = ({ product, quantity, onIncrementQuantity, onDecrementQuanti
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-xl mx-auto">
-        <div className="text-sm text-gray-500 mb-2">REVELOT</div>
-        <h1 className="text-2xl md:text-3xl font-serif mb-3">{product.title}</h1>
-        <div className="text-xl font-medium mb-6">
-          {formatPrice(getCurrentPrice(), product.currency)}
-        </div>
+        <ProductHeader productId={product.id} title={product.title} />
+        
+        <ProductPriceDisplay 
+          price={getCurrentPrice()} 
+          currency={product.currency} 
+          formatPrice={formatPrice} 
+        />
         
         <div className="border-t border-gray-200 pt-6 mb-6">
           <div className="flex justify-between items-center mb-4">
             <div className="text-sm">SKU: {product.id}</div>
             
             {/* Stock indicator */}
-            {stockStatus.inStock ? (
-              stockStatus.lowStock ? (
-                <Badge variant="outline" className="text-amber-600 border-amber-600">
-                  {t('onlyLeft', { count: stockStatus.stock })}
-                </Badge>
-              ) : (
-                <Badge variant="outline" className="text-green-600 border-green-600">
-                  {t('inStock')}
-                </Badge>
-              )
-            ) : (
-              <Badge variant="outline" className="text-red-600 border-red-600">
-                {t('outOfStock')}
-              </Badge>
-            )}
+            <ProductStockStatus stockStatus={stockStatus} t={t} />
           </div>
           
           {/* Variants selection */}
           {attributeNames.map(attributeName => (
-            <div className="mb-6" key={attributeName}>
-              <div className="mb-2 font-medium">{attributeName}</div>
-              <div className="flex gap-2 mb-4">
-                {getAttributeOptions(attributeName).map(value => (
-                  <button 
-                    key={value}
-                    className={`px-4 py-2 border rounded-md ${
-                      selectedAttributes[attributeName] === value 
-                        ? 'border-black bg-black text-white' 
-                        : 'border-gray-300 hover:border-gray-500'
-                    }`}
-                    onClick={() => selectAttribute(attributeName, value)}
-                  >
-                    {value}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <ProductVariantSelector
+              key={attributeName}
+              attributeName={attributeName}
+              options={getAttributeOptions(attributeName)}
+              selectedValue={selectedAttributes[attributeName]}
+              onSelect={selectAttribute}
+            />
           ))}
           
           <QuantitySelector 
@@ -196,44 +175,16 @@ const ProductInfo = ({ product, quantity, onIncrementQuantity, onDecrementQuanti
           />
         </div>
         
-        <div className="flex gap-4 mb-4">
-          <Button 
-            className="flex-1 bg-black hover:bg-black/90 text-white py-6 rounded-none"
-            onClick={handleAddToCart}
-            disabled={!stockStatus.inStock}
-          >
-            {stockStatus.inStock ? t('addToCart') : t('outOfStock')}
-          </Button>
-          
-          <Button
-            variant="outline"
-            className={`px-4 border ${
-              isInWishlist(product.id) 
-                ? 'bg-red-50 border-red-200 text-red-500' 
-                : 'border-gray-300'
-            }`}
-            onClick={handleToggleWishlist}
-          >
-            <Heart 
-              className={`w-5 h-5 ${isInWishlist(product.id) ? 'fill-red-500 text-red-500' : ''}`} 
-            />
-          </Button>
-        </div>
-        
-        <Button 
-          variant="outline" 
-          className="w-full border-black text-black hover:bg-black hover:text-white py-6 rounded-none"
-          onClick={handleBuyNow}
-          disabled={!stockStatus.inStock}
-        >
-          {t('buyNow')}
-        </Button>
-        
-        <div className="mt-4 text-sm text-center">
-          <Link to="/shipping" className="text-gray-500 hover:underline">
-            {t('shipping')}
-          </Link> {t('calculatedAtCheckout')}
-        </div>
+        <ProductActionsBar
+          product={product}
+          selectedVariant={selectedVariant}
+          stockStatus={stockStatus}
+          isInWishlist={isInWishlist(product.id)}
+          handleAddToCart={handleAddToCart}
+          handleBuyNow={handleBuyNow}
+          handleToggleWishlist={handleToggleWishlist}
+          t={t}
+        />
       </div>
     </div>
   );
