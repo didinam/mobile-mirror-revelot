@@ -17,6 +17,12 @@ export interface Order {
   billingAddress?: Address;
   paymentMethod?: string;
   trackingNumber?: string;
+  notes?: string;
+  customer?: {
+    id: string;
+    email: string;
+    name: string;
+  };
 }
 
 export interface OrderItem {

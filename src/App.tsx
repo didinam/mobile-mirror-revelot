@@ -29,6 +29,7 @@ import UserAccount from "./pages/user/UserAccount";
 import UserOrders from "./pages/user/UserOrders";
 import UserProfile from "./pages/user/UserProfile";
 import UserForgotPassword from "./pages/user/UserForgotPassword";
+import OrderDetail from "./pages/user/OrderDetail";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ const App = () => (
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/checkout/confirmation" element={<CheckoutConfirmation />} />
+            <Route path="/track-order/:id" element={<OrderTracking />} />
             
             {/* User Routes */}
             <Route path="/account/login" element={<UserLogin />} />
@@ -55,6 +57,7 @@ const App = () => (
             <Route path="/account" element={<UserAccount />}>
               <Route index element={<UserProfile />} />
               <Route path="orders" element={<UserOrders />} />
+              <Route path="orders/:id" element={<OrderDetail />} />
             </Route>
           </Route>
           
@@ -65,8 +68,13 @@ const App = () => (
             <Route path="products" element={<ProductsAdmin />} />
             <Route path="products/new" element={<ProductEditor />} />
             <Route path="products/edit/:id" element={<ProductEditor />} />
+            <Route path="orders" element={<OrdersAdmin />} />
+            <Route path="orders/:id" element={<OrderAdminDetail />} />
+            <Route path="customers" element={<CustomersAdmin />} />
+            <Route path="analytics" element={<AnalyticsAdmin />} />
             <Route path="images" element={<ImagesAdmin />} />
             <Route path="content" element={<ContentAdmin />} />
+            <Route path="settings" element={<SettingsAdmin />} />
           </Route>
           
           <Route path="*" element={<NotFound />} />

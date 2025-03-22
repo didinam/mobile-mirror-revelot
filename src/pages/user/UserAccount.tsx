@@ -14,7 +14,7 @@ const UserAccount = () => {
   
   return (
     <div className="container mx-auto px-4 py-12">
-      <h1 className="text-2xl font-bold mb-6">Mano paskyra</h1>
+      <h1 className="text-2xl font-bold mb-6">My Account</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Sidebar navigation */}
@@ -46,7 +46,7 @@ const UserAccount = () => {
                   }
                 >
                   <User className="mr-3 h-4 w-4" />
-                  Profilis
+                  Profile
                 </NavLink>
                 
                 <NavLink 
@@ -60,7 +60,7 @@ const UserAccount = () => {
                   }
                 >
                   <ShoppingBag className="mr-3 h-4 w-4" />
-                  Užsakymai
+                  Orders
                 </NavLink>
               </nav>
               
@@ -70,7 +70,7 @@ const UserAccount = () => {
                   className="w-full text-red-500 hover:text-red-700 hover:bg-red-50"
                   onClick={() => logout()}
                 >
-                  <LogOut className="mr-2 h-4 w-4" /> Atsijungti
+                  <LogOut className="mr-2 h-4 w-4" /> Logout
                 </Button>
               </div>
             </div>
