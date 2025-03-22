@@ -1,11 +1,9 @@
 
 import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { X, ChevronRight, Facebook, Instagram, Youtube } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import Logo from '../shared/Logo';
-import { useAuth } from '@/contexts/AuthContext';
-import { useToast } from '@/hooks/use-toast';
+import MobileMenuHeader from './MobileMenu/MobileMenuHeader';
+import MobileMenuContent from './MobileMenu/MobileMenuContent';
+import MobileMenuFooter from './MobileMenu/MobileMenuFooter';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -13,10 +11,6 @@ interface MobileMenuProps {
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
-  const { user, logout } = useAuth();
-  const { toast } = useToast();
-  const navigate = useNavigate();
-  
   // Prevent scrolling when menu is open
   useEffect(() => {
     if (isOpen) {
@@ -29,16 +23,6 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
     };
   }, [isOpen]);
   
-  const handleLogout = async () => {
-    await logout();
-    toast({
-      title: "Logged out successfully",
-      description: "You have been signed out of your account",
-    });
-    onClose();
-    navigate('/');
-  };
-  
   return (
     <div 
       className={cn(
@@ -47,130 +31,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
       )}
     >
       <div className="h-full flex flex-col">
-        <div className="flex items-center justify-between p-4 border-b">
-          <Logo className="h-10" />
-          <button 
-            onClick={onClose}
-            className="p-2 rounded-full hover:bg-gray-100 transition-colors"
-            aria-label="Close menu"
-          >
-            <X className="w-6 h-6" />
-          </button>
-        </div>
-        
-        <div className="flex-1 overflow-y-auto py-4">
-          <nav className="px-4">
-            <ul className="space-y-4">
-              <li className="py-2 border-b">
-                <Link 
-                  to="/collections/terra" 
-                  className="block font-medium text-lg"
-                  onClick={onClose}
-                >
-                  TERRA (NEW)
-                </Link>
-              </li>
-              <li className="py-2 border-b">
-                <Link 
-                  to="/collections/gentus" 
-                  className="block font-medium text-lg"
-                  onClick={onClose}
-                >
-                  GENTUS (COMING SOON)
-                </Link>
-              </li>
-              <li className="py-2 border-b flex items-center justify-between">
-                <Link 
-                  to="/collections/men" 
-                  className="block font-medium text-lg"
-                  onClick={onClose}
-                >
-                  MEN
-                </Link>
-                <ChevronRight className="w-5 h-5 text-gray-500" />
-              </li>
-              <li className="py-2 border-b flex items-center justify-between">
-                <Link 
-                  to="/collections/women" 
-                  className="block font-medium text-lg"
-                  onClick={onClose}
-                >
-                  WOMEN
-                </Link>
-                <ChevronRight className="w-5 h-5 text-gray-500" />
-              </li>
-              <li className="py-2 border-b flex items-center justify-between">
-                <Link 
-                  to="/collections/straps" 
-                  className="block font-medium text-lg"
-                  onClick={onClose}
-                >
-                  STRAPS
-                </Link>
-                <ChevronRight className="w-5 h-5 text-gray-500" />
-              </li>
-            </ul>
-          </nav>
-          
-          <div className="mt-8 px-4">
-            <ul className="space-y-4">
-              {user ? (
-                <li className="py-2 border-b">
-                  <div className="space-y-3">
-                    <Link 
-                      to="/account" 
-                      className="block text-lg flex items-center"
-                      onClick={onClose}
-                    >
-                      My Account
-                    </Link>
-                    <button 
-                      onClick={handleLogout} 
-                      className="block text-lg text-red-500 mt-2"
-                    >
-                      Sign Out
-                    </button>
-                  </div>
-                </li>
-              ) : (
-                <>
-                  <li className="py-2 border-b">
-                    <Link 
-                      to="/account/login" 
-                      className="block text-lg"
-                      onClick={onClose}
-                    >
-                      Sign In
-                    </Link>
-                  </li>
-                  <li className="py-2 border-b">
-                    <Link 
-                      to="/account/register" 
-                      className="block text-lg"
-                      onClick={onClose}
-                    >
-                      Sign Up
-                    </Link>
-                  </li>
-                </>
-              )}
-            </ul>
-          </div>
-        </div>
-        
-        <div className="p-4 border-t">
-          <div className="flex space-x-4 justify-center">
-            <a href="#" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
-              <Facebook className="w-6 h-6" />
-            </a>
-            <a href="#" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
-              <Instagram className="w-6 h-6" />
-            </a>
-            <a href="#" className="p-2 rounded-full hover:bg-gray-100 transition-colors">
-              <Youtube className="w-6 h-6" />
-            </a>
-          </div>
-        </div>
+        <MobileMenuHeader onClose={onClose} />
+        <MobileMenuContent onClose={onClose} />
+        <MobileMenuFooter />
       </div>
     </div>
   );
