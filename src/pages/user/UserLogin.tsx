@@ -24,14 +24,14 @@ const UserLogin = () => {
     
     if (success) {
       toast({
-        title: "Sėkmingai prisijungta",
-        description: "Sveiki sugrįžę į savo paskyrą",
+        title: "Successfully logged in",
+        description: "Welcome back to your account",
       });
       navigate('/account');
     } else {
       toast({
-        title: "Klaida",
-        description: error || "Nepavyko prisijungti, patikrinkite savo duomenis",
+        title: "Error",
+        description: error || "Login failed, please check your credentials",
         variant: "destructive",
       });
     }
@@ -43,19 +43,19 @@ const UserLogin = () => {
     <div className="container mx-auto px-4 py-16 max-w-md">
       <div className="bg-white rounded-lg shadow-md p-8">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold">Prisijungimas</h1>
-          <p className="text-gray-600 mt-2">Prisijunkite prie savo paskyros</p>
+          <h1 className="text-2xl font-bold">Sign In</h1>
+          <p className="text-gray-600 mt-2">Log in to your account</p>
         </div>
         
         <form onSubmit={handleLogin} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="email">El. paštas</Label>
+            <Label htmlFor="email">Email</Label>
             <div className="relative">
               <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
               <Input
                 id="email"
                 type="email"
-                placeholder="jusu@pastas.lt"
+                placeholder="your@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="pl-10"
@@ -66,9 +66,9 @@ const UserLogin = () => {
           
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <Label htmlFor="password">Slaptažodis</Label>
+              <Label htmlFor="password">Password</Label>
               <Link to="/account/forgot-password" className="text-sm text-primary hover:underline">
-                Pamiršote slaptažodį?
+                Forgot password?
               </Link>
             </div>
             <div className="relative">
@@ -91,10 +91,10 @@ const UserLogin = () => {
             disabled={isLoading}
           >
             {isLoading ? (
-              "Jungiamasi..."
+              "Signing in..."
             ) : (
               <>
-                <LogIn className="mr-2 h-4 w-4" /> Prisijungti
+                <LogIn className="mr-2 h-4 w-4" /> Sign In
               </>
             )}
           </Button>
@@ -102,18 +102,18 @@ const UserLogin = () => {
         
         <div className="mt-6 text-center">
           <p className="text-gray-600">
-            Neturite paskyros?{" "}
+            Don't have an account?{" "}
             <Link to="/account/register" className="text-primary hover:underline">
-              Registruotis
+              Sign Up
             </Link>
           </p>
         </div>
         
         <div className="mt-8 text-center text-sm text-gray-500">
           <p>
-            Demo prisijungimui naudokite:<br />
-            El. paštas: user@example.com<br />
-            Slaptažodis: password
+            Demo login credentials:<br />
+            Email: user@example.com<br />
+            Password: password
           </p>
         </div>
       </div>

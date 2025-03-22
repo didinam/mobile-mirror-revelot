@@ -26,8 +26,8 @@ const UserRegister = () => {
     
     if (password !== confirmPassword) {
       toast({
-        title: "Klaida",
-        description: "Slaptažodžiai nesutampa",
+        title: "Error",
+        description: "Passwords do not match",
         variant: "destructive",
       });
       return;
@@ -35,8 +35,8 @@ const UserRegister = () => {
     
     if (!acceptTerms) {
       toast({
-        title: "Klaida",
-        description: "Turite sutikti su sąlygomis ir taisyklėmis",
+        title: "Error",
+        description: "You must accept the terms and conditions",
         variant: "destructive",
       });
       return;
@@ -48,14 +48,14 @@ const UserRegister = () => {
     
     if (success) {
       toast({
-        title: "Registracija sėkminga",
-        description: "Sveikiname prisijungus prie mūsų bendruomenės",
+        title: "Registration successful",
+        description: "Welcome to our community",
       });
       navigate('/account');
     } else {
       toast({
-        title: "Klaida",
-        description: error || "Registracija nepavyko. Bandykite dar kartą",
+        title: "Error",
+        description: error || "Registration failed. Please try again",
         variant: "destructive",
       });
     }
@@ -67,20 +67,20 @@ const UserRegister = () => {
     <div className="container mx-auto px-4 py-16 max-w-md">
       <div className="bg-white rounded-lg shadow-md p-8">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold">Registracija</h1>
-          <p className="text-gray-600 mt-2">Sukurkite savo paskyrą</p>
+          <h1 className="text-2xl font-bold">Sign Up</h1>
+          <p className="text-gray-600 mt-2">Create your account</p>
         </div>
         
         <form onSubmit={handleRegister} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="firstName">Vardas</Label>
+              <Label htmlFor="firstName">First Name</Label>
               <div className="relative">
                 <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                 <Input
                   id="firstName"
                   type="text"
-                  placeholder="Vardas"
+                  placeholder="First Name"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   className="pl-10"
@@ -90,13 +90,13 @@ const UserRegister = () => {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="lastName">Pavardė</Label>
+              <Label htmlFor="lastName">Last Name</Label>
               <div className="relative">
                 <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                 <Input
                   id="lastName"
                   type="text"
-                  placeholder="Pavardė"
+                  placeholder="Last Name"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   className="pl-10"
@@ -107,13 +107,13 @@ const UserRegister = () => {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="email">El. paštas</Label>
+            <Label htmlFor="email">Email</Label>
             <div className="relative">
               <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
               <Input
                 id="email"
                 type="email"
-                placeholder="jusu@pastas.lt"
+                placeholder="your@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="pl-10"
@@ -123,7 +123,7 @@ const UserRegister = () => {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="password">Slaptažodis</Label>
+            <Label htmlFor="password">Password</Label>
             <div className="relative">
               <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
               <Input
@@ -140,7 +140,7 @@ const UserRegister = () => {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="confirmPassword">Pakartokite slaptažodį</Label>
+            <Label htmlFor="confirmPassword">Confirm Password</Label>
             <div className="relative">
               <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
               <Input
@@ -163,9 +163,9 @@ const UserRegister = () => {
               onCheckedChange={(checked) => setAcceptTerms(checked === true)}
             />
             <Label htmlFor="terms" className="text-sm">
-              Sutinku su {" "}
+              I agree to the {" "}
               <Link to="/terms" className="text-primary hover:underline">
-                taisyklėmis ir sąlygomis
+                terms and conditions
               </Link>
             </Label>
           </div>
@@ -176,10 +176,10 @@ const UserRegister = () => {
             disabled={isLoading}
           >
             {isLoading ? (
-              "Registruojama..."
+              "Signing up..."
             ) : (
               <>
-                <UserPlus className="mr-2 h-4 w-4" /> Registruotis
+                <UserPlus className="mr-2 h-4 w-4" /> Sign Up
               </>
             )}
           </Button>
@@ -187,9 +187,9 @@ const UserRegister = () => {
         
         <div className="mt-6 text-center">
           <p className="text-gray-600">
-            Jau turite paskyrą?{" "}
+            Already have an account?{" "}
             <Link to="/account/login" className="text-primary hover:underline">
-              Prisijungti
+              Sign In
             </Link>
           </p>
         </div>

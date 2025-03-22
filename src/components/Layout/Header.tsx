@@ -65,13 +65,13 @@ const Header: React.FC = () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem asChild>
-                      <Link to="/account">Mano paskyra</Link>
+                      <Link to="/account">My Account</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/account/orders">Užsakymai</Link>
+                      <Link to="/account/orders">Orders</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => logout()}>
-                      Atsijungti
+                      Sign Out
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

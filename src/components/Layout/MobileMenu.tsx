@@ -109,7 +109,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
                       className="block text-lg flex items-center"
                       onClick={onClose}
                     >
-                      <User className="w-5 h-5 mr-2" /> Mano paskyra
+                      <User className="w-5 h-5 mr-2" /> My Account
                     </Link>
                     <button 
                       onClick={() => {
@@ -118,7 +118,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
                       }} 
                       className="block text-lg text-red-500 mt-2"
                     >
-                      Atsijungti
+                      Sign Out
                     </button>
                   </div>
                 ) : (
@@ -127,7 +127,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
                     className="block text-lg"
                     onClick={onClose}
                   >
-                    Prisijungti / Registruotis
+                    Sign In / Sign Up
                   </Link>
                 )}
               </li>
@@ -137,7 +137,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
                   className="block text-lg"
                   onClick={onClose}
                 >
-                  Paieška
+                  Search
                 </Link>
               </li>
             </ul>
