@@ -2,345 +2,436 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { 
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
-import { 
-  Tabs, 
-  TabsContent, 
-  TabsList, 
-  TabsTrigger 
-} from '@/components/ui/tabs';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
+import { Save, Store, Globe, ShieldCheck, Bell, Mail } from 'lucide-react';
 
 const SettingsAdmin = () => {
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState('general');
+  const [storeSettings, setStoreSettings] = useState({
+    storeName: "Chronos Watches",
+    storeEmail: "contact@chronos-watches.com",
+    supportEmail: "support@chronos-watches.com",
+    phoneNumber: "+1 (555) 123-4567",
+    address: "123 Main Street, New York, NY 10001",
+    currency: "USD",
+    weightUnit: "kg"
+  });
   
-  // General settings
-  const [storeName, setStoreName] = useState('Chrono Store');
-  const [storeEmail, setStoreEmail] = useState('info@chronostore.com');
-  const [storePhone, setStorePhone] = useState('+1 (555) 123-4567');
-  const [storeAddress, setStoreAddress] = useState('123 Main St, New York, NY 10001');
-  const [currency, setCurrency] = useState('USD');
+  const [siteSettings, setSiteSettings] = useState({
+    siteTitle: "Chronos Watches | Luxury Timepieces",
+    metaDescription: "Discover premium watches at Chronos. Luxury timepieces for every occasion.",
+    socialLinks: {
+      facebook: "https://facebook.com/chronos",
+      instagram: "https://instagram.com/chronos_watches",
+      twitter: "https://twitter.com/chronos"
+    },
+    googleAnalyticsId: "UA-XXXXXXXXX-X"
+  });
+
+  const [securitySettings, setSecuritySettings] = useState({
+    twoFactorAuth: false,
+    passwordExpiration: 90,
+    ipRestriction: false,
+    automaticLogout: 30
+  });
   
-  // Email settings
-  const [emailFromName, setEmailFromName] = useState('Chrono Store');
-  const [emailFromAddress, setEmailFromAddress] = useState('notifications@chronostore.com');
-  const [emailFooter, setEmailFooter] = useState('© 2023 Chrono Store. All rights reserved.');
+  const [notificationSettings, setNotificationSettings] = useState({
+    orderNotifications: true,
+    lowStockNotifications: true,
+    customerSignups: true,
+    newsletterSignups: false
+  });
   
-  // Shipping settings
-  const [freeShippingThreshold, setFreeShippingThreshold] = useState('100');
-  const [shippingOptions, setShippingOptions] = useState([
-    { name: 'Standard Shipping', price: '5.00', days: '3-5' },
-    { name: 'Express Shipping', price: '15.00', days: '1-2' }
-  ]);
-  
-  // Payment settings
-  const [acceptPaypal, setAcceptPaypal] = useState(true);
-  const [acceptCreditCards, setAcceptCreditCards] = useState(true);
-  const [testMode, setTestMode] = useState(true);
-  
-  const handleSaveSettings = () => {
+  const handleStoreSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     toast({
       title: "Settings Saved",
-      description: "Your store settings have been updated successfully",
+      description: "Store settings have been updated successfully.",
     });
   };
   
+  const handleSiteSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast({
+      title: "Settings Saved",
+      description: "Site settings have been updated successfully.",
+    });
+  };
+  
+  const handleSecuritySubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast({
+      title: "Settings Saved",
+      description: "Security settings have been updated successfully.",
+    });
+  };
+  
+  const handleNotificationSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast({
+      title: "Settings Saved",
+      description: "Notification settings have been updated successfully.",
+    });
+  };
+
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Store Settings</h1>
-      </div>
+      <h1 className="text-2xl font-bold mb-6">Store Settings</h1>
       
-      <Tabs defaultValue="general" value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="mb-6 w-full flex justify-start overflow-x-auto">
-          <TabsTrigger value="general">General</TabsTrigger>
-          <TabsTrigger value="email">Email</TabsTrigger>
-          <TabsTrigger value="shipping">Shipping</TabsTrigger>
-          <TabsTrigger value="payment">Payment</TabsTrigger>
-          <TabsTrigger value="taxes">Taxes</TabsTrigger>
-          <TabsTrigger value="checkout">Checkout</TabsTrigger>
+      <Tabs defaultValue="store" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="store" className="flex items-center gap-2">
+            <Store className="h-4 w-4" />
+            Store
+          </TabsTrigger>
+          <TabsTrigger value="site" className="flex items-center gap-2">
+            <Globe className="h-4 w-4" />
+            Site
+          </TabsTrigger>
+          <TabsTrigger value="security" className="flex items-center gap-2">
+            <ShieldCheck className="h-4 w-4" />
+            Security
+          </TabsTrigger>
+          <TabsTrigger value="notifications" className="flex items-center gap-2">
+            <Bell className="h-4 w-4" />
+            Notifications
+          </TabsTrigger>
         </TabsList>
         
-        <TabsContent value="general">
+        <TabsContent value="store">
           <Card>
             <CardHeader>
-              <CardTitle>General Settings</CardTitle>
+              <CardTitle>Store Information</CardTitle>
               <CardDescription>
-                Configure the basic information for your store
+                Basic information about your store that will appear on receipts and communications.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="store-name">Store Name</Label>
-                <Input
-                  id="store-name"
-                  value={storeName}
-                  onChange={(e) => setStoreName(e.target.value)}
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="store-email">Store Email</Label>
-                <Input
-                  id="store-email"
-                  type="email"
-                  value={storeEmail}
-                  onChange={(e) => setStoreEmail(e.target.value)}
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="store-phone">Store Phone</Label>
-                <Input
-                  id="store-phone"
-                  value={storePhone}
-                  onChange={(e) => setStorePhone(e.target.value)}
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="store-address">Store Address</Label>
-                <Textarea
-                  id="store-address"
-                  value={storeAddress}
-                  onChange={(e) => setStoreAddress(e.target.value)}
-                  rows={3}
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="currency">Currency</Label>
-                <Select value={currency} onValueChange={setCurrency}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select currency" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="USD">USD - US Dollar</SelectItem>
-                    <SelectItem value="EUR">EUR - Euro</SelectItem>
-                    <SelectItem value="GBP">GBP - British Pound</SelectItem>
-                    <SelectItem value="CAD">CAD - Canadian Dollar</SelectItem>
-                    <SelectItem value="AUD">AUD - Australian Dollar</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <Button onClick={handleSaveSettings}>Save Settings</Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        
-        <TabsContent value="email">
-          <Card>
-            <CardHeader>
-              <CardTitle>Email Settings</CardTitle>
-              <CardDescription>
-                Configure how emails are sent from your store
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email-from-name">From Name</Label>
-                <Input
-                  id="email-from-name"
-                  value={emailFromName}
-                  onChange={(e) => setEmailFromName(e.target.value)}
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="email-from-address">From Email Address</Label>
-                <Input
-                  id="email-from-address"
-                  type="email"
-                  value={emailFromAddress}
-                  onChange={(e) => setEmailFromAddress(e.target.value)}
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="email-footer">Email Footer Text</Label>
-                <Textarea
-                  id="email-footer"
-                  value={emailFooter}
-                  onChange={(e) => setEmailFooter(e.target.value)}
-                  rows={3}
-                />
-              </div>
-              
-              <Button onClick={handleSaveSettings}>Save Settings</Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        
-        <TabsContent value="shipping">
-          <Card>
-            <CardHeader>
-              <CardTitle>Shipping Settings</CardTitle>
-              <CardDescription>
-                Configure shipping methods and costs
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="free-shipping-threshold">Free Shipping Threshold ($)</Label>
-                <Input
-                  id="free-shipping-threshold"
-                  type="number"
-                  value={freeShippingThreshold}
-                  onChange={(e) => setFreeShippingThreshold(e.target.value)}
-                />
-                <p className="text-sm text-gray-500">
-                  Orders above this amount qualify for free shipping. Set to 0 to disable.
-                </p>
-              </div>
-              
-              <div className="space-y-2">
-                <Label>Shipping Options</Label>
-                {shippingOptions.map((option, index) => (
-                  <div key={index} className="p-4 border rounded-md">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor={`shipping-name-${index}`}>Method Name</Label>
-                        <Input
-                          id={`shipping-name-${index}`}
-                          value={option.name}
-                          onChange={(e) => {
-                            const newOptions = [...shippingOptions];
-                            newOptions[index].name = e.target.value;
-                            setShippingOptions(newOptions);
-                          }}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor={`shipping-price-${index}`}>Price ($)</Label>
-                        <Input
-                          id={`shipping-price-${index}`}
-                          value={option.price}
-                          onChange={(e) => {
-                            const newOptions = [...shippingOptions];
-                            newOptions[index].price = e.target.value;
-                            setShippingOptions(newOptions);
-                          }}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor={`shipping-days-${index}`}>Delivery Time (days)</Label>
-                        <Input
-                          id={`shipping-days-${index}`}
-                          value={option.days}
-                          onChange={(e) => {
-                            const newOptions = [...shippingOptions];
-                            newOptions[index].days = e.target.value;
-                            setShippingOptions(newOptions);
-                          }}
-                        />
-                      </div>
-                    </div>
+            <form onSubmit={handleStoreSubmit}>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <FormLabel htmlFor="storeName">Store Name</FormLabel>
+                    <Input 
+                      id="storeName" 
+                      value={storeSettings.storeName}
+                      onChange={(e) => setStoreSettings({...storeSettings, storeName: e.target.value})}
+                    />
                   </div>
-                ))}
-              </div>
-              
-              <Button onClick={handleSaveSettings}>Save Settings</Button>
-            </CardContent>
+                  
+                  <div className="space-y-2">
+                    <FormLabel htmlFor="storeEmail">Store Email</FormLabel>
+                    <Input 
+                      id="storeEmail" 
+                      type="email"
+                      value={storeSettings.storeEmail}
+                      onChange={(e) => setStoreSettings({...storeSettings, storeEmail: e.target.value})}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <FormLabel htmlFor="supportEmail">Support Email</FormLabel>
+                    <Input 
+                      id="supportEmail" 
+                      type="email"
+                      value={storeSettings.supportEmail}
+                      onChange={(e) => setStoreSettings({...storeSettings, supportEmail: e.target.value})}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <FormLabel htmlFor="phoneNumber">Phone Number</FormLabel>
+                    <Input 
+                      id="phoneNumber" 
+                      value={storeSettings.phoneNumber}
+                      onChange={(e) => setStoreSettings({...storeSettings, phoneNumber: e.target.value})}
+                    />
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <FormLabel htmlFor="address">Address</FormLabel>
+                  <Input 
+                    id="address" 
+                    value={storeSettings.address}
+                    onChange={(e) => setStoreSettings({...storeSettings, address: e.target.value})}
+                  />
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <FormLabel htmlFor="currency">Currency</FormLabel>
+                    <Input 
+                      id="currency" 
+                      value={storeSettings.currency}
+                      onChange={(e) => setStoreSettings({...storeSettings, currency: e.target.value})}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <FormLabel htmlFor="weightUnit">Weight Unit</FormLabel>
+                    <Input 
+                      id="weightUnit" 
+                      value={storeSettings.weightUnit}
+                      onChange={(e) => setStoreSettings({...storeSettings, weightUnit: e.target.value})}
+                    />
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button type="submit" className="flex items-center gap-2">
+                  <Save className="h-4 w-4" />
+                  Save Changes
+                </Button>
+              </CardFooter>
+            </form>
           </Card>
         </TabsContent>
         
-        <TabsContent value="payment">
+        <TabsContent value="site">
           <Card>
             <CardHeader>
-              <CardTitle>Payment Settings</CardTitle>
+              <CardTitle>Site Settings</CardTitle>
               <CardDescription>
-                Configure payment methods and options
+                SEO and social media settings to improve your online presence.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label htmlFor="accept-credit-cards">Credit Cards</Label>
-                  <p className="text-sm text-gray-500">
-                    Accept payments via Visa, Mastercard, Amex
-                  </p>
+            <form onSubmit={handleSiteSubmit}>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <FormLabel htmlFor="siteTitle">Site Title</FormLabel>
+                  <Input 
+                    id="siteTitle" 
+                    value={siteSettings.siteTitle}
+                    onChange={(e) => setSiteSettings({...siteSettings, siteTitle: e.target.value})}
+                  />
                 </div>
-                <Switch
-                  id="accept-credit-cards"
-                  checked={acceptCreditCards}
-                  onCheckedChange={setAcceptCreditCards}
-                />
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label htmlFor="accept-paypal">PayPal</Label>
-                  <p className="text-sm text-gray-500">
-                    Accept payments via PayPal
-                  </p>
+                
+                <div className="space-y-2">
+                  <FormLabel htmlFor="metaDescription">Meta Description</FormLabel>
+                  <Input 
+                    id="metaDescription" 
+                    value={siteSettings.metaDescription}
+                    onChange={(e) => setSiteSettings({...siteSettings, metaDescription: e.target.value})}
+                  />
+                  <FormDescription>
+                    Recommended to keep under 160 characters for optimal SEO.
+                  </FormDescription>
                 </div>
-                <Switch
-                  id="accept-paypal"
-                  checked={acceptPaypal}
-                  onCheckedChange={setAcceptPaypal}
-                />
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label htmlFor="test-mode">Test Mode</Label>
-                  <p className="text-sm text-gray-500">
-                    Process payments in test mode (no actual charges)
-                  </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <FormLabel htmlFor="facebook">Facebook</FormLabel>
+                    <Input 
+                      id="facebook" 
+                      value={siteSettings.socialLinks.facebook}
+                      onChange={(e) => setSiteSettings({
+                        ...siteSettings, 
+                        socialLinks: {...siteSettings.socialLinks, facebook: e.target.value}
+                      })}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <FormLabel htmlFor="instagram">Instagram</FormLabel>
+                    <Input 
+                      id="instagram" 
+                      value={siteSettings.socialLinks.instagram}
+                      onChange={(e) => setSiteSettings({
+                        ...siteSettings, 
+                        socialLinks: {...siteSettings.socialLinks, instagram: e.target.value}
+                      })}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <FormLabel htmlFor="twitter">Twitter</FormLabel>
+                    <Input 
+                      id="twitter" 
+                      value={siteSettings.socialLinks.twitter}
+                      onChange={(e) => setSiteSettings({
+                        ...siteSettings, 
+                        socialLinks: {...siteSettings.socialLinks, twitter: e.target.value}
+                      })}
+                    />
+                  </div>
                 </div>
-                <Switch
-                  id="test-mode"
-                  checked={testMode}
-                  onCheckedChange={setTestMode}
-                />
-              </div>
-              
-              <Button onClick={handleSaveSettings}>Save Settings</Button>
-            </CardContent>
+                
+                <div className="space-y-2">
+                  <FormLabel htmlFor="googleAnalyticsId">Google Analytics ID</FormLabel>
+                  <Input 
+                    id="googleAnalyticsId" 
+                    value={siteSettings.googleAnalyticsId}
+                    onChange={(e) => setSiteSettings({...siteSettings, googleAnalyticsId: e.target.value})}
+                  />
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button type="submit" className="flex items-center gap-2">
+                  <Save className="h-4 w-4" />
+                  Save Changes
+                </Button>
+              </CardFooter>
+            </form>
           </Card>
         </TabsContent>
         
-        <TabsContent value="taxes">
+        <TabsContent value="security">
           <Card>
             <CardHeader>
-              <CardTitle>Tax Settings</CardTitle>
+              <CardTitle>Security Settings</CardTitle>
               <CardDescription>
-                Configure how taxes are calculated and applied
+                Protect your store and customer data with these security settings.
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <p className="text-center text-gray-500 py-8">
-                Tax settings configuration will be implemented in a future update.
-              </p>
-            </CardContent>
+            <form onSubmit={handleSecuritySubmit}>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel className="text-base">Two-Factor Authentication</FormLabel>
+                    <FormDescription>
+                      Require staff to verify their identity with a second device
+                    </FormDescription>
+                  </div>
+                  <Switch
+                    checked={securitySettings.twoFactorAuth}
+                    onCheckedChange={(checked) => setSecuritySettings({...securitySettings, twoFactorAuth: checked})}
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <FormLabel htmlFor="passwordExpiration">Password Expiration (days)</FormLabel>
+                  <Input 
+                    id="passwordExpiration" 
+                    type="number"
+                    value={securitySettings.passwordExpiration}
+                    onChange={(e) => setSecuritySettings({...securitySettings, passwordExpiration: parseInt(e.target.value)})}
+                  />
+                  <FormDescription>
+                    Set to 0 to disable password expiration.
+                  </FormDescription>
+                </div>
+                
+                <div className="flex items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel className="text-base">IP Restriction</FormLabel>
+                    <FormDescription>
+                      Limit login attempts from unfamiliar IP addresses
+                    </FormDescription>
+                  </div>
+                  <Switch
+                    checked={securitySettings.ipRestriction}
+                    onCheckedChange={(checked) => setSecuritySettings({...securitySettings, ipRestriction: checked})}
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <FormLabel htmlFor="automaticLogout">Automatic Logout (minutes)</FormLabel>
+                  <Input 
+                    id="automaticLogout" 
+                    type="number"
+                    value={securitySettings.automaticLogout}
+                    onChange={(e) => setSecuritySettings({...securitySettings, automaticLogout: parseInt(e.target.value)})}
+                  />
+                  <FormDescription>
+                    Time of inactivity before automatically logging out users.
+                  </FormDescription>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button type="submit" className="flex items-center gap-2">
+                  <Save className="h-4 w-4" />
+                  Save Changes
+                </Button>
+              </CardFooter>
+            </form>
           </Card>
         </TabsContent>
         
-        <TabsContent value="checkout">
+        <TabsContent value="notifications">
           <Card>
             <CardHeader>
-              <CardTitle>Checkout Settings</CardTitle>
+              <CardTitle>Notification Settings</CardTitle>
               <CardDescription>
-                Configure the checkout experience for your customers
+                Configure which events trigger email notifications to store admins.
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <p className="text-center text-gray-500 py-8">
-                Checkout settings configuration will be implemented in a future update.
-              </p>
-            </CardContent>
+            <form onSubmit={handleNotificationSubmit}>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel className="text-base">
+                      <Mail className="h-4 w-4 inline mr-2" />
+                      Order Notifications
+                    </FormLabel>
+                    <FormDescription>
+                      Receive notifications for new orders and order status changes
+                    </FormDescription>
+                  </div>
+                  <Switch
+                    checked={notificationSettings.orderNotifications}
+                    onCheckedChange={(checked) => setNotificationSettings({...notificationSettings, orderNotifications: checked})}
+                  />
+                </div>
+                
+                <div className="flex items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel className="text-base">
+                      <Mail className="h-4 w-4 inline mr-2" />
+                      Low Stock Notifications
+                    </FormLabel>
+                    <FormDescription>
+                      Get alerted when product inventory falls below threshold
+                    </FormDescription>
+                  </div>
+                  <Switch
+                    checked={notificationSettings.lowStockNotifications}
+                    onCheckedChange={(checked) => setNotificationSettings({...notificationSettings, lowStockNotifications: checked})}
+                  />
+                </div>
+                
+                <div className="flex items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel className="text-base">
+                      <Mail className="h-4 w-4 inline mr-2" />
+                      Customer Signups
+                    </FormLabel>
+                    <FormDescription>
+                      Receive notifications when new customers register
+                    </FormDescription>
+                  </div>
+                  <Switch
+                    checked={notificationSettings.customerSignups}
+                    onCheckedChange={(checked) => setNotificationSettings({...notificationSettings, customerSignups: checked})}
+                  />
+                </div>
+                
+                <div className="flex items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel className="text-base">
+                      <Mail className="h-4 w-4 inline mr-2" />
+                      Newsletter Signups
+                    </FormLabel>
+                    <FormDescription>
+                      Get notified when visitors subscribe to your newsletter
+                    </FormDescription>
+                  </div>
+                  <Switch
+                    checked={notificationSettings.newsletterSignups}
+                    onCheckedChange={(checked) => setNotificationSettings({...notificationSettings, newsletterSignups: checked})}
+                  />
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button type="submit" className="flex items-center gap-2">
+                  <Save className="h-4 w-4" />
+                  Save Changes
+                </Button>
+              </CardFooter>
+            </form>
           </Card>
         </TabsContent>
       </Tabs>

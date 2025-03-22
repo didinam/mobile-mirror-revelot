@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import CheckoutConfirmation from "./pages/CheckoutConfirmation";
+import OrderTracking from "./pages/OrderTracking";
 
 // Admin components
 import AdminLogin from "./components/admin/AdminLogin";
@@ -21,6 +22,11 @@ import ProductsAdmin from "./pages/admin/ProductsAdmin";
 import ImagesAdmin from "./pages/admin/ImagesAdmin";
 import ContentAdmin from "./pages/admin/ContentAdmin";
 import ProductEditor from "./pages/admin/ProductEditor";
+import OrdersAdmin from "./pages/admin/OrdersAdmin";
+import OrderAdminDetail from "./pages/admin/OrderAdminDetail";
+import CustomersAdmin from "./pages/admin/CustomersAdmin";
+import AnalyticsAdmin from "./pages/admin/AnalyticsAdmin";
+import SettingsAdmin from "./pages/admin/SettingsAdmin";
 
 // User components
 import UserLogin from "./pages/user/UserLogin";
