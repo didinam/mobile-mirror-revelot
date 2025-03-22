@@ -1,10 +1,13 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Product } from '@/types';
+import { Product, ProductVariant, ProductAttribute } from '@/types';
 import QuantitySelector from './QuantitySelector';
 import { useCart } from '@/contexts/CartContext';
+import { useWishlist } from '@/contexts/WishlistContext';
+import { Heart } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 type ProductInfoProps = {
   product: Product;
@@ -15,14 +18,118 @@ type ProductInfoProps = {
 
 const ProductInfo = ({ product, quantity, onIncrementQuantity, onDecrementQuantity }: ProductInfoProps) => {
   const { addToCart } = useCart();
+  const { addToWishlist, isInWishlist, removeFromWishlist } = useWishlist();
+  
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
+    product.variants && product.variants.length > 0 ? product.variants[0] : null
+  );
+  const [selectedAttributes, setSelectedAttributes] = useState<Record<string, string>>({});
+  
+  // Determine available attribute values for each attribute type
+  const getAttributeOptions = (attributeName: string): string[] => {
+    if (!product.variants) return [];
+    
+    // Get unique attribute values for the given attribute name
+    const uniqueValues = new Set<string>();
+    product.variants.forEach(variant => {
+      const attribute = variant.attributes.find(attr => attr.name === attributeName);
+      if (attribute) {
+        uniqueValues.add(attribute.value);
+      }
+    });
+    
+    return Array.from(uniqueValues);
+  };
+  
+  // Get all unique attribute names across all variants
+  const getAttributeNames = (): string[] => {
+    if (!product.variants) return [];
+    
+    const uniqueNames = new Set<string>();
+    product.variants.forEach(variant => {
+      variant.attributes.forEach(attr => {
+        uniqueNames.add(attr.name);
+      });
+    });
+    
+    return Array.from(uniqueNames);
+  };
+  
+  const attributeNames = getAttributeNames();
+  
+  // Update selected variant when attributes change
+  const selectAttribute = (name: string, value: string) => {
+    const newSelectedAttributes = {
+      ...selectedAttributes,
+      [name]: value,
+    };
+    setSelectedAttributes(newSelectedAttributes);
+    
+    // Find a matching variant with the selected attributes
+    if (product.variants) {
+      const matchingVariant = product.variants.find(variant => {
+        return Object.entries(newSelectedAttributes).every(([attrName, attrValue]) => {
+          const attribute = variant.attributes.find(attr => attr.name === attrName);
+          return attribute && attribute.value === attrValue;
+        });
+      });
+      
+      setSelectedVariant(matchingVariant || null);
+    }
+  };
+  
+  // Get the current price based on selected variant or product
+  const getCurrentPrice = () => {
+    if (selectedVariant && selectedVariant.price !== undefined) {
+      return selectedVariant.price;
+    }
+    return product.price;
+  };
+  
+  // Get the current stock status based on selected variant or product
+  const getStockStatus = () => {
+    if (selectedVariant) {
+      if (selectedVariant.stock <= 0) {
+        return { inStock: false, lowStock: false, stock: 0 };
+      }
+      if (selectedVariant.stock <= 5) {
+        return { inStock: true, lowStock: true, stock: selectedVariant.stock };
+      }
+      return { inStock: true, lowStock: false, stock: selectedVariant.stock };
+    }
+    
+    // Fall back to product stock
+    const stock = product.stock || 10; // Default to 10 if not specified
+    if (stock <= 0) {
+      return { inStock: false, lowStock: false, stock: 0 };
+    }
+    if (stock <= 5) {
+      return { inStock: true, lowStock: true, stock };
+    }
+    return { inStock: true, lowStock: false, stock };
+  };
+  
+  const stockStatus = getStockStatus();
   
   const handleAddToCart = () => {
-    addToCart(product, quantity);
+    if (selectedVariant) {
+      addToCart(product, quantity, selectedVariant);
+    } else {
+      addToCart(product, quantity);
+    }
   };
   
   const handleBuyNow = () => {
-    addToCart(product, quantity);
+    handleAddToCart();
     window.location.href = '/checkout';
+  };
+  
+  const handleToggleWishlist = () => {
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product);
+    }
   };
   
   return (
@@ -30,20 +137,51 @@ const ProductInfo = ({ product, quantity, onIncrementQuantity, onDecrementQuanti
       <div className="max-w-xl mx-auto">
         <div className="text-sm text-gray-500 mb-2">REVELOT</div>
         <h1 className="text-2xl md:text-3xl font-serif mb-3">{product.title}</h1>
-        <div className="text-xl font-medium mb-6">{product.currency} {product.price.toFixed(2)}</div>
+        <div className="text-xl font-medium mb-6">{product.currency} {getCurrentPrice().toFixed(2)}</div>
         
         <div className="border-t border-gray-200 pt-6 mb-6">
-          <div className="text-sm mb-1">SKU: S16-4B4BL3</div>
-          <div className="text-sm mb-6">We have {product.stock || 5} in stock</div>
-          
-          <div className="mb-6">
-            <div className="mb-2 font-medium">Color</div>
-            <div className="flex gap-2 mb-4">
-              <button className="w-8 h-8 bg-black rounded-full border-2 border-gray-300" aria-label="Black"></button>
-              <button className="w-8 h-8 bg-gray-700 rounded-full" aria-label="Dark Gray"></button>
-              <button className="w-8 h-8 bg-gray-400 rounded-full" aria-label="Gray"></button>
-            </div>
+          <div className="flex justify-between items-center mb-4">
+            <div className="text-sm">SKU: {product.id}</div>
+            
+            {/* Stock indicator */}
+            {stockStatus.inStock ? (
+              stockStatus.lowStock ? (
+                <Badge variant="outline" className="text-amber-600 border-amber-600">
+                  Only {stockStatus.stock} left
+                </Badge>
+              ) : (
+                <Badge variant="outline" className="text-green-600 border-green-600">
+                  In Stock
+                </Badge>
+              )
+            ) : (
+              <Badge variant="outline" className="text-red-600 border-red-600">
+                Out of Stock
+              </Badge>
+            )}
           </div>
+          
+          {/* Variants selection */}
+          {attributeNames.map(attributeName => (
+            <div className="mb-6" key={attributeName}>
+              <div className="mb-2 font-medium">{attributeName}</div>
+              <div className="flex gap-2 mb-4">
+                {getAttributeOptions(attributeName).map(value => (
+                  <button 
+                    key={value}
+                    className={`px-4 py-2 border rounded-md ${
+                      selectedAttributes[attributeName] === value 
+                        ? 'border-black bg-black text-white' 
+                        : 'border-gray-300 hover:border-gray-500'
+                    }`}
+                    onClick={() => selectAttribute(attributeName, value)}
+                  >
+                    {value}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
           
           <QuantitySelector 
             quantity={quantity} 
@@ -52,17 +190,35 @@ const ProductInfo = ({ product, quantity, onIncrementQuantity, onDecrementQuanti
           />
         </div>
         
-        <Button 
-          className="w-full bg-black hover:bg-black/90 text-white py-6 rounded-none"
-          onClick={handleAddToCart}
-        >
-          ADD TO CART
-        </Button>
+        <div className="flex gap-4 mb-4">
+          <Button 
+            className="flex-1 bg-black hover:bg-black/90 text-white py-6 rounded-none"
+            onClick={handleAddToCart}
+            disabled={!stockStatus.inStock}
+          >
+            {stockStatus.inStock ? 'ADD TO CART' : 'OUT OF STOCK'}
+          </Button>
+          
+          <Button
+            variant="outline"
+            className={`px-4 border ${
+              isInWishlist(product.id) 
+                ? 'bg-red-50 border-red-200 text-red-500' 
+                : 'border-gray-300'
+            }`}
+            onClick={handleToggleWishlist}
+          >
+            <Heart 
+              className={`w-5 h-5 ${isInWishlist(product.id) ? 'fill-red-500 text-red-500' : ''}`} 
+            />
+          </Button>
+        </div>
         
         <Button 
           variant="outline" 
-          className="w-full mt-4 border-black text-black hover:bg-black hover:text-white py-6 rounded-none"
+          className="w-full border-black text-black hover:bg-black hover:text-white py-6 rounded-none"
           onClick={handleBuyNow}
+          disabled={!stockStatus.inStock}
         >
           BUY IT NOW
         </Button>

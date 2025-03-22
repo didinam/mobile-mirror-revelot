@@ -1,12 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, Search, ShoppingCart, User } from 'lucide-react';
+import { Menu, Search, ShoppingCart, User, Heart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import MobileMenu from './MobileMenu';
 import Logo from '../shared/Logo';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCart } from '@/contexts/CartContext';
+import { useWishlist } from '@/contexts/WishlistContext';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -20,6 +21,7 @@ const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logout } = useAuth();
   const { totalItems } = useCart();
+  const { totalItems: wishlistItems } = useWishlist();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -56,6 +58,15 @@ const Header: React.FC = () => {
                 <Search className="w-6 h-6" />
               </Link>
               
+              <Link to="/wishlist" className="relative icon-button p-1 mr-2">
+                <Heart className="w-6 h-6" />
+                {wishlistItems > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center rounded-full bg-black text-white text-xs">
+                    {wishlistItems}
+                  </span>
+                )}
+              </Link>
+              
               {user ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -69,6 +80,9 @@ const Header: React.FC = () => {
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link to="/account/orders">Orders</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/wishlist">Wishlist</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => logout()}>
                       Sign Out

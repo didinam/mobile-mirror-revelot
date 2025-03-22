@@ -11,6 +11,10 @@ export interface Product {
   description?: string;
   variants?: ProductVariant[];
   stock?: number;
+  inStock?: boolean;
+  lowStock?: boolean; // For indicating low stock
+  images?: string[];
+  features?: string[];
 }
 
 export interface ProductVariant {
@@ -20,6 +24,8 @@ export interface ProductVariant {
   image?: string;
   attributes: ProductAttribute[];
   stock: number;
+  inStock?: boolean;
+  lowStock?: boolean;
 }
 
 export interface ProductAttribute {
@@ -38,3 +44,12 @@ export interface CartItem {
   attributes?: ProductAttribute[];
 }
 
+export interface WishlistItem {
+  id: string;
+  productId: string;
+  title: string;
+  price: number;
+  image: string;
+  addedAt: string;
+  slug: string;
+}

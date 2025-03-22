@@ -16,12 +16,6 @@ const ProductDetail = () => {
   // Use the new image uploaded by user
   const watchImage = '/lovable-uploads/7a0f7dfc-1749-4460-9161-25bb1925d0e2.png';
   
-  const images = [
-    watchImage,
-    watchImage,
-    watchImage,
-  ];
-
   useEffect(() => {
     setLoading(true);
     
@@ -34,7 +28,61 @@ const ProductDetail = () => {
         image: watchImage,
         soldOut: false,
         collection: 'gentus',
-        slug: 'gentus-40mm-black-chronograph-steel-automatic'
+        slug: 'gentus-40mm-black-chronograph-steel-automatic',
+        stock: 12,
+        inStock: true,
+        lowStock: false,
+        description: 'The Gentus 40MM Black Chronograph is our flagship automatic movement watch. Crafted with premium materials and Swiss engineering, this timepiece combines elegance with functionality.',
+        images: [watchImage, watchImage, watchImage],
+        features: [
+          'Automatic movement',
+          'Sapphire crystal glass',
+          'Water resistant to 100m',
+          '40mm case diameter',
+          'Genuine leather strap'
+        ],
+        variants: [
+          {
+            id: 'v1',
+            title: 'Black / Steel / 40mm',
+            stock: 8,
+            attributes: [
+              { name: 'Color', value: 'Black' },
+              { name: 'Material', value: 'Steel' },
+              { name: 'Size', value: '40mm' }
+            ]
+          },
+          {
+            id: 'v2',
+            title: 'Silver / Steel / 40mm',
+            stock: 5,
+            attributes: [
+              { name: 'Color', value: 'Silver' },
+              { name: 'Material', value: 'Steel' },
+              { name: 'Size', value: '40mm' }
+            ]
+          },
+          {
+            id: 'v3',
+            title: 'Black / Steel / 42mm',
+            stock: 3,
+            attributes: [
+              { name: 'Color', value: 'Black' },
+              { name: 'Material', value: 'Steel' },
+              { name: 'Size', value: '42mm' }
+            ]
+          },
+          {
+            id: 'v4',
+            title: 'Silver / Steel / 42mm',
+            stock: 0,
+            attributes: [
+              { name: 'Color', value: 'Silver' },
+              { name: 'Material', value: 'Steel' },
+              { name: 'Size', value: '42mm' }
+            ]
+          }
+        ]
       };
       
       setProduct(dummyProduct);
@@ -42,7 +90,7 @@ const ProductDetail = () => {
     }, 500);
     
     window.scrollTo(0, 0);
-  }, [slug]);
+  }, [slug, watchImage]);
 
   const incrementQuantity = () => {
     setQuantity(prev => prev + 1);
@@ -79,7 +127,7 @@ const ProductDetail = () => {
         Get 10% Off When You Sign Up To Our Newsletter
       </div>
       
-      <ProductGallery images={images} productTitle={product.title} />
+      <ProductGallery images={product.images || [product.image]} productTitle={product.title} />
       
       <ProductInfo 
         product={product} 
@@ -88,7 +136,7 @@ const ProductDetail = () => {
         onDecrementQuantity={decrementQuantity}
       />
       
-      <ProductDetails />
+      <ProductDetails product={product} />
     </div>
   );
 };

@@ -2,16 +2,36 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { Product } from '@/types';
+import { Check } from 'lucide-react';
 
-const ProductDetails = () => {
+type ProductDetailsProps = {
+  product?: Product;
+};
+
+const ProductDetails = ({ product }: ProductDetailsProps) => {
   return (
     <div className="mt-8 space-y-6 max-w-xl mx-auto px-4">
       <div className="border-t border-gray-200 pt-6">
         <h3 className="text-lg font-medium mb-2">Description</h3>
         <p className="text-sm text-gray-700 mb-4">
-          Our 16" Black Bamboo Leather Strap combines elegance with sustainability. Crafted from premium leather with bamboo-inspired texturing, this strap offers both comfort and durability. Perfect for everyday wear or special occasions, it adds a touch of sophistication to any watch.
+          {product?.description || 'Our 16" Black Bamboo Leather Strap combines elegance with sustainability. Crafted from premium leather with bamboo-inspired texturing, this strap offers both comfort and durability. Perfect for everyday wear or special occasions, it adds a touch of sophistication to any watch.'}
         </p>
       </div>
+      
+      {product?.features && product.features.length > 0 && (
+        <div className="border-t border-gray-200 pt-6">
+          <h3 className="text-lg font-medium mb-2">Features</h3>
+          <ul className="space-y-2">
+            {product.features.map((feature, index) => (
+              <li key={index} className="flex items-start">
+                <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
+                <span className="text-sm text-gray-700">{feature}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       
       <div className="border-t border-gray-200 pt-6">
         <h3 className="text-lg font-medium mb-2">Payment</h3>
