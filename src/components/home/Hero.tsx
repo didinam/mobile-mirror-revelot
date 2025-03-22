@@ -1,12 +1,32 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ShoppingCart } from "lucide-react";
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useCart } from '@/contexts/CartContext';
+import { toast } from 'sonner';
 
 const Hero: React.FC = () => {
   const isMobile = useIsMobile();
+  const { addToCart } = useCart();
+  
+  const handleAddToCart = () => {
+    // Add a featured product to cart
+    const featuredProduct = {
+      id: 'featured-1',
+      title: 'Gentus 40MM | Black Chronograph Steel (Automatic)',
+      price: 1599.00,
+      currency: 'RM',
+      image: '/lovable-uploads/7a0f7dfc-1749-4460-9161-25bb1925d0e2.png',
+      collection: 'gentus',
+      slug: 'gentus-40mm-black-chronograph-steel-automatic',
+    };
+    
+    addToCart(featuredProduct, 1);
+    toast.success('Product added to cart', {
+      description: 'Gentus 40MM Black Chronograph has been added to your cart'
+    });
+  };
   
   return (
     <div className="relative w-full">
@@ -27,12 +47,12 @@ const Hero: React.FC = () => {
           </p>
           <div className="flex justify-center">
             <Button 
-              asChild
+              onClick={handleAddToCart}
               className="bg-white text-black hover:bg-white/90 font-medium px-8 py-6 text-sm uppercase"
             >
-              <Link to="/collections/mecadromo" className="flex items-center gap-2">
-                SHOP NOW <ArrowRight className="w-4 h-4" />
-              </Link>
+              <span className="flex items-center gap-2">
+                SHOP NOW <ShoppingCart className="w-4 h-4" />
+              </span>
             </Button>
           </div>
         </div>
