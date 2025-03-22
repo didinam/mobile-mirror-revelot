@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ProductFeatureProps {
   title: string;
@@ -19,6 +20,7 @@ const ProductFeature: React.FC<ProductFeatureProps> = ({
   buttonText,
   buttonLink
 }) => {
+  const isMobile = useIsMobile();
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -40,7 +42,7 @@ const ProductFeature: React.FC<ProductFeatureProps> = ({
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-16 bg-gray-50 reveal-section">
+    <section ref={sectionRef} className={`${isMobile ? 'py-8' : 'py-16'} bg-gray-50 reveal-section`}>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1 space-y-6">
