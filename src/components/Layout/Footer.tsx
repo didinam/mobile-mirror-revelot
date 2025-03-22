@@ -4,9 +4,20 @@ import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Youtube, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useCurrency } from '@/contexts/CurrencyContext';
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
+  const { currentLanguage, availableLanguages, setLanguage } = useLanguage();
+  const { currentCurrency, availableCurrencies, setCurrency } = useCurrency();
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,14 +109,35 @@ const Footer: React.FC = () => {
           </div>
         </div>
         
-        <div className="text-center text-xs text-gray-500">
+        <div className="text-center text-xs text-gray-500 mt-8">
           <p>© All Rights Reserved 2025</p>
-          <div className="mt-2 flex justify-center">
-            <select className="bg-transparent text-gray-400 border-gray-800 text-xs">
-              <option value="USD">USD ($)</option>
-              <option value="EUR">EUR (€)</option>
-              <option value="GBP">GBP (£)</option>
-            </select>
+          
+          <div className="mt-4 flex justify-center space-x-4">
+            <Select value={currentCurrency.code} onValueChange={setCurrency}>
+              <SelectTrigger className="w-[120px] bg-transparent border-gray-800 text-gray-400">
+                <SelectValue placeholder="Currency" />
+              </SelectTrigger>
+              <SelectContent>
+                {availableCurrencies.map((currency) => (
+                  <SelectItem key={currency.code} value={currency.code}>
+                    {currency.symbol} {currency.code}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+            <Select value={currentLanguage.code} onValueChange={setLanguage}>
+              <SelectTrigger className="w-[120px] bg-transparent border-gray-800 text-gray-400">
+                <SelectValue placeholder="Language" />
+              </SelectTrigger>
+              <SelectContent>
+                {availableLanguages.map((language) => (
+                  <SelectItem key={language.code} value={language.code}>
+                    {language.flag} {language.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </div>

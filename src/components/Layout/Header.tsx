@@ -16,8 +16,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import LanguageSelector from '../shared/LanguageSelector';
-import CurrencySelector from '../shared/CurrencySelector';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -58,11 +56,6 @@ const Header: React.FC = () => {
             </Link>
             
             <div className="flex items-center">
-              <div className="hidden md:flex mr-2">
-                <LanguageSelector />
-                <CurrencySelector />
-              </div>
-              
               <Link to="/search" className="icon-button p-1 mr-2">
                 <Search className="w-6 h-6" />
               </Link>

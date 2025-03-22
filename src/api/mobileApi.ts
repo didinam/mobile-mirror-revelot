@@ -1,4 +1,3 @@
-
 import { Product, CartItem, WishlistItem, Promotion } from '@/types';
 
 // This file would normally interact with actual backend endpoints,
@@ -340,7 +339,7 @@ export const orderApi = {
           image: '/placeholder.svg',
         },
       ],
-      shipping: {
+      shippingInfo: {
         address: '123 Main St',
         city: 'Anytown',
         state: 'CA',

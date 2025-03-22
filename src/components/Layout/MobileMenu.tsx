@@ -156,14 +156,6 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
               <Youtube className="w-6 h-6" />
             </a>
           </div>
-          
-          <div className="mt-4 flex justify-center">
-            <select className="currency-selector border border-gray-300 rounded px-4 py-2 bg-white">
-              <option value="USD">USD ($)</option>
-              <option value="EUR">EUR (€)</option>
-              <option value="GBP">GBP (£)</option>
-            </select>
-          </div>
         </div>
       </div>
     </div>
