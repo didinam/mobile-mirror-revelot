@@ -1,14 +1,16 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useCart } from '@/contexts/CartContext';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 const Hero: React.FC = () => {
   const isMobile = useIsMobile();
   const { addToCart } = useCart();
+  const navigate = useNavigate();
   
   const handleAddToCart = () => {
     // Add a featured product to cart
@@ -17,7 +19,7 @@ const Hero: React.FC = () => {
       title: 'Gentus 40MM | Black Chronograph Steel (Automatic)',
       price: 1599.00,
       currency: 'RM',
-      image: '/lovable-uploads/7a0f7dfc-1749-4460-9161-25bb1925d0e2.png',
+      image: '/lovable-uploads/5f89fd53-65cb-4737-91e8-c0ca6285eace.png',
       collection: 'gentus',
       slug: 'gentus-40mm-black-chronograph-steel-automatic',
     };
@@ -26,14 +28,17 @@ const Hero: React.FC = () => {
     toast.success('Product added to cart', {
       description: 'Gentus 40MM Black Chronograph has been added to your cart'
     });
+    
+    // Navigate to cart page
+    navigate('/cart');
   };
   
   return (
     <div className="relative w-full">
       <div 
-        className={`w-full bg-black ${isMobile ? 'h-screen' : 'aspect-[21/9]'}`}
+        className={`w-full bg-black ${isMobile ? 'h-screen' : 'aspect-square max-h-[80vh]'}`}
         style={{
-          backgroundImage: "url('/lovable-uploads/b99b01af-a2e5-4146-9c2b-860e1c680ab8.png')",
+          backgroundImage: "url('/lovable-uploads/5f89fd53-65cb-4737-91e8-c0ca6285eace.png')",
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
@@ -43,7 +48,7 @@ const Hero: React.FC = () => {
         <div className="text-center max-w-xl mx-auto space-y-6">
           <h1 className="text-4xl md:text-5xl font-serif mb-4 uppercase tracking-wider">MECADROMO</h1>
           <p className="text-white/90 mb-8 max-w-md mx-auto">
-            Timeless elegance designed for the modern lifestyle. Discover our exceptional collection of premium timepieces.
+            Timeless elegance designed for the modern lifestyle.
           </p>
           <div className="flex justify-center">
             <Button 
