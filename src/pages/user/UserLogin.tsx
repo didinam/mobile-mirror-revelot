@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,10 +14,19 @@ const UserLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { login, error } = useAuth();
+  const { login, error, user, session } = useAuth();
+
+  // Redirect if user is already logged in
+  useEffect(() => {
+    if (user && session) {
+      console.log("User already logged in, redirecting to account");
+      navigate('/account');
+    }
+  }, [user, session, navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Login attempt with:", email);
     setIsLoading(true);
     
     try {
@@ -28,10 +37,11 @@ const UserLogin = () => {
           title: "Successfully logged in",
           description: "Welcome back to your account",
         });
-        // Ensure we navigate to account page
+        // Ensure we navigate to account page with enough delay to allow state updates
+        console.log("Login successful, redirecting to account page");
         setTimeout(() => {
-          navigate('/account');
-        }, 500);
+          navigate('/account', { replace: true });
+        }, 1000);
       } else {
         toast({
           title: "Error",

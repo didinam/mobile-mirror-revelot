@@ -66,10 +66,10 @@ const Footer: React.FC = () => {
                 <ChevronRight className="w-4 h-4 ml-1" />
               </h4>
               <ul className="space-y-3 text-sm">
-                <li><Link to="/pages/warranty" className="hover:underline">Warranty</Link></li>
-                <li><Link to="/pages/shipping" className="hover:underline">Shipping</Link></li>
-                <li><Link to="/pages/returns" className="hover:underline">Returns</Link></li>
-                <li><Link to="/pages/contact" className="hover:underline">Contact Us</Link></li>
+                <li><Link to="/pages/warranty" className="hover:underline">Warranty Information & Claims</Link></li>
+                <li><Link to="/pages/shipping" className="hover:underline">Shipping & Delivery Policies</Link></li>
+                <li><Link to="/pages/returns" className="hover:underline">Returns & Exchanges Process</Link></li>
+                <li><Link to="/pages/contact" className="hover:underline">Contact Our Support Team</Link></li>
               </ul>
             </div>
             
@@ -79,10 +79,10 @@ const Footer: React.FC = () => {
                 <ChevronRight className="w-4 h-4 ml-1" />
               </h4>
               <ul className="space-y-3 text-sm">
-                <li><Link to="/pages/about" className="hover:underline">About Us</Link></li>
-                <li><Link to="/pages/faq" className="hover:underline">FAQ</Link></li>
-                <li><Link to="/pages/privacy" className="hover:underline">Privacy Policy</Link></li>
-                <li><Link to="/pages/terms" className="hover:underline">Terms of Service</Link></li>
+                <li><Link to="/pages/about" className="hover:underline">About Our Company & Mission</Link></li>
+                <li><Link to="/pages/faq" className="hover:underline">Frequently Asked Questions</Link></li>
+                <li><Link to="/pages/privacy" className="hover:underline">Privacy Policy & Data Protection</Link></li>
+                <li><Link to="/pages/terms" className="hover:underline">Terms of Service & Conditions</Link></li>
               </ul>
             </div>
           </div>
@@ -90,13 +90,13 @@ const Footer: React.FC = () => {
         
         {/* Social Media Icons */}
         <div className="flex justify-center space-x-6 mb-8">
-          <a href="#" className="text-white hover:text-gray-300 transition-colors">
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 transition-colors" aria-label="Visit our Facebook page">
             <Facebook className="w-6 h-6" />
           </a>
-          <a href="#" className="text-white hover:text-gray-300 transition-colors">
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 transition-colors" aria-label="Visit our Instagram page">
             <Instagram className="w-6 h-6" />
           </a>
-          <a href="#" className="text-white hover:text-gray-300 transition-colors">
+          <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 transition-colors" aria-label="Visit our YouTube channel">
             <Youtube className="w-6 h-6" />
           </a>
         </div>
