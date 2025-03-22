@@ -2,20 +2,17 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { 
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Order } from '@/types/user';
-import { ArrowLeft, Package, Truck, User, CreditCard, FileText, Send, Printer } from 'lucide-react';
+import { ArrowLeft, Send, Printer } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Order } from '@/types/user';
+import { getStatusColor, formatDate } from '@/utils/orderUtils';
+
+// Import our new components
+import OrderStatusCard from '@/components/admin/orders/OrderStatusCard';
+import OrderItemsCard from '@/components/admin/orders/OrderItemsCard';
+import CustomerInfoCard from '@/components/admin/orders/CustomerInfoCard';
+import ShippingInfoCard from '@/components/admin/orders/ShippingInfoCard';
+import PaymentInfoCard from '@/components/admin/orders/PaymentInfoCard';
 
 const OrderAdminDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -69,32 +66,6 @@ const OrderAdminDetail = () => {
     }
   };
   
-  const getStatusColor = (status: Order['status']) => {
-    switch (status) {
-      case 'delivered':
-        return 'bg-green-100 text-green-800';
-      case 'shipped':
-        return 'bg-blue-100 text-blue-800';
-      case 'processing':
-        return 'bg-orange-100 text-orange-800';
-      case 'pending':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'cancelled':
-        return 'bg-red-100 text-red-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
-  
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-  
   const handleUpdateOrder = () => {
     // In a real app, this would send an API request
     toast({
@@ -138,186 +109,36 @@ const OrderAdminDetail = () => {
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <div className="lg:col-span-2 space-y-6">
-          <Card>
-            <CardHeader className="pb-2">
-              <div className="flex justify-between items-center">
-                <CardTitle className="text-lg flex items-center">
-                  <Package className="h-5 w-5 mr-2" />
-                  Order Details
-                </CardTitle>
-                <Badge className={getStatusColor(status)}>
-                  {status.charAt(0).toUpperCase() + status.slice(1)}
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium mb-1 block">Order Status</label>
-                  <Select value={status} onValueChange={(value: Order['status']) => setStatus(value)}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Select status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="pending">Pending</SelectItem>
-                      <SelectItem value="processing">Processing</SelectItem>
-                      <SelectItem value="shipped">Shipped</SelectItem>
-                      <SelectItem value="delivered">Delivered</SelectItem>
-                      <SelectItem value="cancelled">Cancelled</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div>
-                  <label className="text-sm font-medium mb-1 block">Tracking Number</label>
-                  <Input 
-                    value={trackingNumber} 
-                    onChange={(e) => setTrackingNumber(e.target.value)} 
-                    placeholder="Enter tracking number"
-                  />
-                </div>
-                
-                <div>
-                  <label className="text-sm font-medium mb-1 block">Admin Notes</label>
-                  <Textarea 
-                    value={notes} 
-                    onChange={(e) => setNotes(e.target.value)} 
-                    placeholder="Add private notes about this order"
-                    rows={3}
-                  />
-                </div>
-                
-                <div className="pt-4">
-                  <Button onClick={handleUpdateOrder}>Update Order</Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <OrderStatusCard 
+            status={status}
+            setStatus={setStatus}
+            trackingNumber={trackingNumber}
+            setTrackingNumber={setTrackingNumber}
+            notes={notes}
+            setNotes={setNotes}
+            handleUpdateOrder={handleUpdateOrder}
+            getStatusColor={getStatusColor}
+          />
           
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center">
-                <FileText className="h-5 w-5 mr-2" />
-                Order Items
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {order.items.map((item) => (
-                  <div key={item.id} className="flex gap-4">
-                    <div className="w-16 h-16 rounded-md border overflow-hidden flex-shrink-0">
-                      <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex justify-between mb-1">
-                        <h4 className="font-medium">{item.title}</h4>
-                        <span>${item.price.toFixed(2)}</span>
-                      </div>
-                      <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
-                      <div className="flex justify-between mt-2">
-                        <p className="text-sm text-gray-500">Product ID: {item.productId}</p>
-                        <p className="text-sm font-medium">Subtotal: ${(item.price * item.quantity).toFixed(2)}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                
-                <div className="pt-4 border-t">
-                  <div className="flex justify-between py-1">
-                    <span>Subtotal</span>
-                    <span>${order.total.toFixed(2)}</span>
-                  </div>
-                  <div className="flex justify-between py-1">
-                    <span>Shipping</span>
-                    <span>$0.00</span>
-                  </div>
-                  <div className="flex justify-between py-1 font-semibold">
-                    <span>Total</span>
-                    <span>${order.total.toFixed(2)}</span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <OrderItemsCard 
+            items={order.items}
+            total={order.total}
+          />
         </div>
         
         <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center">
-                <User className="h-5 w-5 mr-2" />
-                Customer
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {order.customer && (
-                <div>
-                  <p className="font-medium">{order.customer.name}</p>
-                  <p className="text-gray-500">{order.customer.email}</p>
-                  <div className="flex justify-between mt-4">
-                    <Button variant="outline" size="sm" asChild>
-                      <Link to={`/admin/customers/${order.customer.id}`}>
-                        View Customer
-                      </Link>
-                    </Button>
-                    <Button variant="ghost" size="sm">
-                      Email
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+          {order.customer && (
+            <CustomerInfoCard customer={order.customer} />
+          )}
           
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center">
-                <Truck className="h-5 w-5 mr-2" />
-                Shipping
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {order.shippingAddress && (
-                <div>
-                  <p className="font-medium">
-                    {order.shippingAddress.firstName} {order.shippingAddress.lastName}
-                  </p>
-                  <p>{order.shippingAddress.address1}</p>
-                  {order.shippingAddress.address2 && <p>{order.shippingAddress.address2}</p>}
-                  <p>
-                    {order.shippingAddress.city}, {order.shippingAddress.state} {order.shippingAddress.postalCode}
-                  </p>
-                  <p>{order.shippingAddress.country}</p>
-                  {order.shippingAddress.phone && <p>{order.shippingAddress.phone}</p>}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+          {order.shippingAddress && (
+            <ShippingInfoCard shippingAddress={order.shippingAddress} />
+          )}
           
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center">
-                <CreditCard className="h-5 w-5 mr-2" />
-                Payment
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="mb-1"><span className="text-sm text-gray-500">Payment Method</span></p>
-              <p className="font-medium">{order.paymentMethod || "Credit Card"}</p>
-              <p className="mt-2 mb-1"><span className="text-sm text-gray-500">Billing Address</span></p>
-              {order.billingAddress && (
-                <div>
-                  <p>
-                    {order.billingAddress.firstName} {order.billingAddress.lastName}
-                  </p>
-                  <p>{order.billingAddress.address1}</p>
-                  <p>
-                    {order.billingAddress.city}, {order.billingAddress.state} {order.billingAddress.postalCode}
-                  </p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+          <PaymentInfoCard 
+            paymentMethod={order.paymentMethod}
+            billingAddress={order.billingAddress}
+          />
         </div>
       </div>
     </div>
