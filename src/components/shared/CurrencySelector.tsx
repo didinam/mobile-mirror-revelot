@@ -8,7 +8,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { DollarSign } from 'lucide-react';
 
 const CurrencySelector: React.FC = () => {
   const { currentCurrency, availableCurrencies, setCurrency } = useCurrency();

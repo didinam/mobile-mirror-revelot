@@ -30,7 +30,8 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-black text-white">
       <div className="container mx-auto px-4 py-10">
-        <div className="mb-10">
+        {/* Newsletter Section */}
+        <div className="mb-12">
           <div className="max-w-lg mx-auto text-center mb-6">
             <h3 className="font-serif text-xl mb-3">NEWSLETTER</h3>
             <p className="text-sm mb-4">
@@ -56,35 +57,39 @@ const Footer: React.FC = () => {
           </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-          <div>
-            <h4 className="font-serif text-lg mb-4 flex items-center">
-              INQUIRIES
-              <ChevronRight className="w-4 h-4 ml-1" />
-            </h4>
-            <ul className="space-y-2 text-sm">
-              <li><Link to="/pages/warranty" className="hover:underline">Warranty</Link></li>
-              <li><Link to="/pages/shipping" className="hover:underline">Shipping</Link></li>
-              <li><Link to="/pages/returns" className="hover:underline">Returns</Link></li>
-              <li><Link to="/pages/contact" className="hover:underline">Contact Us</Link></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="font-serif text-lg mb-4 flex items-center">
-              QUICKLINKS
-              <ChevronRight className="w-4 h-4 ml-1" />
-            </h4>
-            <ul className="space-y-2 text-sm">
-              <li><Link to="/pages/about" className="hover:underline">About Us</Link></li>
-              <li><Link to="/pages/faq" className="hover:underline">FAQ</Link></li>
-              <li><Link to="/pages/privacy" className="hover:underline">Privacy Policy</Link></li>
-              <li><Link to="/pages/terms" className="hover:underline">Terms of Service</Link></li>
-            </ul>
+        {/* Links Section - Centered and improved for all devices */}
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 text-center">
+            <div className="flex flex-col items-center">
+              <h4 className="font-serif text-lg mb-4 flex items-center">
+                INQUIRIES
+                <ChevronRight className="w-4 h-4 ml-1" />
+              </h4>
+              <ul className="space-y-3 text-sm">
+                <li><Link to="/pages/warranty" className="hover:underline">Warranty</Link></li>
+                <li><Link to="/pages/shipping" className="hover:underline">Shipping</Link></li>
+                <li><Link to="/pages/returns" className="hover:underline">Returns</Link></li>
+                <li><Link to="/pages/contact" className="hover:underline">Contact Us</Link></li>
+              </ul>
+            </div>
+            
+            <div className="flex flex-col items-center">
+              <h4 className="font-serif text-lg mb-4 flex items-center">
+                QUICKLINKS
+                <ChevronRight className="w-4 h-4 ml-1" />
+              </h4>
+              <ul className="space-y-3 text-sm">
+                <li><Link to="/pages/about" className="hover:underline">About Us</Link></li>
+                <li><Link to="/pages/faq" className="hover:underline">FAQ</Link></li>
+                <li><Link to="/pages/privacy" className="hover:underline">Privacy Policy</Link></li>
+                <li><Link to="/pages/terms" className="hover:underline">Terms of Service</Link></li>
+              </ul>
+            </div>
           </div>
         </div>
         
-        <div className="flex justify-center space-x-4 mb-6">
+        {/* Social Media Icons */}
+        <div className="flex justify-center space-x-6 mb-8">
           <a href="#" className="text-white hover:text-gray-300 transition-colors">
             <Facebook className="w-6 h-6" />
           </a>
@@ -96,7 +101,8 @@ const Footer: React.FC = () => {
           </a>
         </div>
         
-        <div className="flex justify-center mb-6">
+        {/* Payment Icons */}
+        <div className="flex justify-center mb-8">
           <div className="flex flex-wrap justify-center gap-2">
             <img src="/payment-icons/visa.svg" alt="Visa" className="h-8 bg-white rounded p-1" />
             <img src="/payment-icons/mastercard.svg" alt="Mastercard" className="h-8 bg-white rounded p-1" />
@@ -109,6 +115,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
         
+        {/* Copyright and Language/Currency Selectors */}
         <div className="text-center text-xs text-gray-500 mt-8">
           <p>© All Rights Reserved 2025</p>
           

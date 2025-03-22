@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { CurrencyOption } from '@/types';
 
@@ -10,7 +9,6 @@ const currencyOptions: CurrencyOption[] = [
   { code: 'JPY', symbol: '¥', name: 'Japanese Yen', rate: 150.12 },
   { code: 'CAD', symbol: 'CA$', name: 'Canadian Dollar', rate: 1.36 },
   { code: 'AUD', symbol: 'A$', name: 'Australian Dollar', rate: 1.52 },
-  { code: 'MYR', symbol: 'RM', name: 'Malaysian Ringgit', rate: 4.73 },
 ];
 
 interface CurrencyContextType {
