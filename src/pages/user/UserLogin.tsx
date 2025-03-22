@@ -20,23 +20,35 @@ const UserLogin = () => {
     e.preventDefault();
     setIsLoading(true);
     
-    const success = await login(email, password);
-    
-    if (success) {
-      toast({
-        title: "Successfully logged in",
-        description: "Welcome back to your account",
-      });
-      navigate('/account');
-    } else {
+    try {
+      const success = await login(email, password);
+      
+      if (success) {
+        toast({
+          title: "Successfully logged in",
+          description: "Welcome back to your account",
+        });
+        // Ensure we navigate to account page
+        setTimeout(() => {
+          navigate('/account');
+        }, 500);
+      } else {
+        toast({
+          title: "Error",
+          description: error || "Login failed, please check your credentials",
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
+      console.error("Login error:", err);
       toast({
         title: "Error",
-        description: error || "Login failed, please check your credentials",
+        description: "An unexpected error occurred during login",
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false);
     }
-    
-    setIsLoading(false);
   };
 
   return (

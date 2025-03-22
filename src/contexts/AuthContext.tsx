@@ -118,11 +118,40 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
       
       if (error) {
-        throw error;
+        console.error("Supabase login error:", error);
+        setError(error.message || 'An error occurred during login');
+        setIsLoading(false);
+        return false;
+      }
+
+      console.log("Login successful, session data:", data);
+      
+      // Explicitly update the user and session state here for immediate feedback
+      if (data && data.user) {
+        // Get user profile data
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', data.user.id)
+          .single();
+          
+        if (profile) {
+          setUser({
+            id: data.user.id,
+            email: data.user.email || '',
+            firstName: profile.first_name || '',
+            lastName: profile.last_name || '',
+            createdAt: data.user.created_at || new Date().toISOString(),
+          });
+        }
+        
+        setSession(data.session);
       }
       
+      setIsLoading(false);
       return true;
     } catch (err: any) {
+      console.error("Unexpected login error:", err);
       setError(err.message || 'An error occurred during login');
       setIsLoading(false);
       return false;
