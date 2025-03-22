@@ -62,11 +62,11 @@ const ProductFeature: React.FC<ProductFeatureProps> = ({
           </div>
           
           <div className="order-1 md:order-2">
-            <div className="overflow-hidden">
+            <div className="overflow-hidden aspect-square">
               <img 
                 src={image} 
                 alt={title} 
-                className="w-full object-cover hover:scale-105 transition-transform duration-700"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
               />
             </div>
           </div>

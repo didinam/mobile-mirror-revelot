@@ -14,7 +14,7 @@ const IndexPage = () => {
       <ProductFeature 
         title="Premium Craftsmanship"
         description="Our timepieces are meticulously crafted with attention to detail. Each watch represents the perfect balance of elegant design and precision engineering, created for those who appreciate the exceptional."
-        image="/lovable-uploads/1a311dec-5032-4861-8a49-04825816b5be.png"
+        image="/lovable-uploads/5f89fd53-65cb-4737-91e8-c0ca6285eace.png"
         buttonText="SHOP NOW"
         buttonLink="/cart"
       />
