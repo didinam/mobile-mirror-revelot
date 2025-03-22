@@ -11,7 +11,12 @@ const IndexPage = () => {
   return (
     <div className="space-y-16 py-8">
       <Hero />
-      <FeaturedCollection />
+      <FeaturedCollection 
+        title="Summer Collection"
+        description="Discover our latest collection of timepieces perfect for the summer season. Elegant designs that complement your summer style."
+        image="/lovable-uploads/1a311dec-5032-4861-8a49-04825816b5be.png"
+        link="/products?collection=summer"
+      />
       <ShopByCollection />
       <BestSellers />
       <div className="max-w-6xl mx-auto px-4">
